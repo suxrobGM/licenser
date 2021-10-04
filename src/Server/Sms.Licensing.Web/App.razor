@@ -1,0 +1,29 @@
+@inject NavigationManager NavManager
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    @if (context.User.Identity != null && !context.User.Identity.IsAuthenticated)
+                    {
+                        <RedirectToLogin LoginPageUrl="/Login" />
+                    }
+                    else
+                    {
+                        <h1 class="text-danger">Access Denied</h1>
+                        <p class="text-danger">You do not have access to this resource.</p>
+                    }
+                </NotAuthorized>
+                <Authorizing>
+                    <h1>Authentication in progress</h1>
+                </Authorizing>
+            </AuthorizeRouteView>
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p>Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

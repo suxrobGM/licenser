@@ -1,0 +1,149 @@
+﻿@page "/Manage/Licenses"
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+
+@using System.Collections.ObjectModel
+@using Sms.Licensing.Core.Extensions
+@using Sms.Licensing.Sdk.Server.Abstractions
+@using Sms.Licensing.Shared.Models
+@using Action = Syncfusion.Blazor.Grids.Action
+
+@inject IStringLocalizer<Index> Localizer
+@inject ISmsApiServer ApiServer
+
+<h1>@Localizer["Licenses"]</h1>
+
+<MessageDialog @ref="_msgDialog" />
+<SfGrid @ref="_grid" DataSource="@_licensesCollection" AllowPaging="true" AllowResizing="true" AllowSorting="true" Toolbar="@_toolbarItems">
+    <GridPageSettings PageSizes="new[]{15, 25, 50}" PageSize="25"></GridPageSettings>
+    <GridEvents OnActionComplete="GridActionComplete" TValue="LicenseDto"></GridEvents>
+    <GridEditSettings AllowEditing="true" AllowDeleting="true"
+                      ShowDeleteConfirmDialog="true" ShowConfirmDialog="true" Mode="EditMode.Dialog" Dialog="_dialogSettings">
+        <HeaderTemplate>
+            @if (context is LicenseDto license)
+            {
+                <span>@Localizer["Record of"] @license.OwnerUserName @license.ProductName</span>
+            }
+        </HeaderTemplate>
+        <Template>
+            @{
+                if (context is LicenseDto license)
+                {
+                    <div>
+                        <div class="form-group">
+                            <label for="LicenseId">@Localizer["ID"]</label>
+                            <SfTextBox ID="LicenseId" @bind-Value="@license.Id" Enabled="false"></SfTextBox>
+                        </div>
+                        <div class="form-group">
+                            <label for="OwnerId">@Localizer["Client Name"]</label>
+                            <SfComboBox ID="OwnerId" TItem="UserDto" TValue="string" @bind-Value="@license.OwnerUserName" DataSource="@_usersCollection">
+                                <ComboBoxFieldSettings Value="UserName"></ComboBoxFieldSettings>
+                            </SfComboBox>
+                        </div>
+                        <div class="form-group">
+                            <label for="MachineId">@Localizer["Machine ID"]</label>
+                            <SfTextBox ID="MachineId" FloatLabelType="FloatLabelType.Auto" Placeholder="ex. adSy5Ftr-oHUjW5MUKOWl4Mpry1" @bind-Value="@license.MachineId" Enabled="false"></SfTextBox>
+                        </div>
+                        <div class="form-group">
+                            <label for="ProductName">@Localizer["Product Name"]</label>
+                            <SfTextBox ID="ProductName" @bind-Value="@license.ProductName" Enabled="false"></SfTextBox>
+                        </div>
+                        <div class="form-group">
+                            <label for="ObjectName">@Localizer["Object Name"]</label>
+                            <SfTextBox ID="ObjectName" @bind-Value="@license.ObjectName"></SfTextBox>
+                        </div>
+                        <div class="form-group">
+                            <label for="IssueDate">@Localizer["Issue Date"]</label>
+                            <SfDatePicker ID="IssueDate" @bind-Value="@license.IssueDate" Enabled="false"></SfDatePicker>
+                        </div>
+                        <div class="form-group">
+                            <label for="ExpiryDate">@Localizer["Expiry Date"]</label>
+                            <SfDatePicker ID="ExpiryDate" @bind-Value="@license.ExpiryDate"></SfDatePicker>
+                        </div>
+                    </div>
+                }
+            }
+        </Template>
+    </GridEditSettings>
+    <GridColumns>
+        <GridColumn Field="@nameof(LicenseDto.Id)" HeaderText="ID" IsPrimaryKey="true"></GridColumn>
+        <GridColumn Field="@nameof(LicenseDto.MachineId)" HeaderText="Machine ID" ValidationRules="@(new ValidationRules{ Required = true })"></GridColumn>
+        <GridColumn Field="@nameof(LicenseDto.OwnerUserName)" HeaderText="Client Name" ValidationRules="@(new ValidationRules{ Required = true })"></GridColumn>
+        <GridColumn Field="@nameof(LicenseDto.ProductName)" HeaderText="Product Name" ValidationRules="@(new ValidationRules{ Required = true })"></GridColumn>
+        <GridColumn Field="@nameof(LicenseDto.ObjectName)" HeaderText="Object Name"></GridColumn>
+        <GridColumn Field="@nameof(LicenseDto.IssueDate)" HeaderText="Issue Date"></GridColumn>
+        <GridColumn Field="@nameof(LicenseDto.ExpiryDate)" HeaderText="Expiry Date" ValidationRules="@(new ValidationRules{ Required = true })">
+            <Template>
+                @{
+                    if (context is LicenseDto license)
+                    {
+                        <span>
+                            @license.ExpiryDate?.ToShortDateString()&nbsp;
+                        </span>
+                        if (license.ExpiryDate < DateTime.Now)
+                        {
+                            <span class="badge badge-danger">@Localizer["Expired"]</span>
+                        }
+                    }
+                }
+            </Template>
+        </GridColumn>
+    </GridColumns>
+</SfGrid>
+
+@code {
+    private readonly string[] _toolbarItems = { "Edit", "Delete", "Search" };
+    private readonly ObservableCollection<LicenseDto> _licensesCollection = new();
+    private readonly ObservableCollection<UserDto> _usersCollection = new();
+    private readonly DialogSettings _dialogSettings = new();
+    private MessageDialog _msgDialog;
+    private SfGrid<LicenseDto> _grid;
+
+    protected override Task OnInitializedAsync()
+    {
+        _dialogSettings.EnableResize = true;
+        _dialogSettings.Width = "500px";
+        return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        var getLicensesResponse = await ApiServer.GetLicensesAsync();
+
+        if (_msgDialog.ShowIfHasApiErrors(getLicensesResponse))
+            return;
+
+        var getUsersResponse = await ApiServer.GetUsersAsync();
+
+        if (_msgDialog.ShowIfHasApiErrors(getUsersResponse))
+            return;
+
+        _usersCollection.AddRange(getUsersResponse.Data);
+        _licensesCollection.AddRange(getLicensesResponse.Data);
+    }
+
+    private async void GridActionComplete(ActionEventArgs<LicenseDto> args)
+    {
+        var licenseRecord = args.Data;
+
+        if (licenseRecord == null)
+            return;
+
+        if (args.RequestType == Action.Save)
+        {
+            var updateLicenseResponse = await ApiServer.UpdateLicenseAsync(licenseRecord);
+
+            if (_msgDialog.ShowIfHasApiErrors(updateLicenseResponse))
+                args.Cancel = true;
+        }
+        else if (args.RequestType == Action.Delete)
+        {
+            var deleteLicenseResponse = await ApiServer.DeleteLicenseAsync(licenseRecord);
+
+            if (_msgDialog.ShowIfHasApiErrors(deleteLicenseResponse))
+                args.Cancel = true;
+        }
+    }
+}

@@ -1,0 +1,34 @@
+﻿@namespace Sms.Licensing.Web.Components
+
+@if (!string.IsNullOrEmpty(Description))
+{
+    var isDismissible = IsDismissible ? "alert-dismissible" : "";
+    var alertType = Type == AlertType.Success ? "alert-success" : "alert-danger";
+
+    <div class="alert @alertType @isDismissible">
+        @if (IsDismissible)
+        {
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        }
+        
+        @Description
+    </div>
+}
+
+@code {
+    [Parameter] public AlertType Type { get; set; }
+    [Parameter] public string Description { get; set; }
+    [Parameter] public bool IsDismissible { get; set; }
+
+    public void MessageAlert(string description)
+    {
+        Description = description;
+        StateHasChanged();
+    }
+
+    public enum AlertType
+    {
+        Error,
+        Success
+    }
+}

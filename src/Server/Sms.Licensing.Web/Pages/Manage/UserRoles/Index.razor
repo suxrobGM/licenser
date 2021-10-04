@@ -1,0 +1,106 @@
+﻿@page "/Manage/UserRoles"
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+
+@using System.Collections.ObjectModel
+@using Sms.Licensing.Core.Extensions
+@using Sms.Licensing.Sdk.Server.Abstractions
+@using Sms.Licensing.Shared.Models
+@using Action = Syncfusion.Blazor.Grids.Action
+
+@inject IStringLocalizer<Index> Localizer
+@inject ISmsApiServer ApiServer
+
+<h1>@Localizer["Application Roles"]</h1>
+
+<MessageDialog @ref="_msgDialog" />
+<SfGrid @ref="_grid" DataSource="@_rolesCollection" AllowResizing="true" AllowSorting="true" Toolbar="@_toolbarItems">
+    <GridEvents OnActionComplete="GridActionComplete" TValue="RoleDto"></GridEvents>
+    <GridEditSettings AllowEditing="true" ShowConfirmDialog="true" Mode="EditMode.Dialog" Dialog="_dialogSettings">
+        <HeaderTemplate>
+            @if (context is RoleDto role)
+            {
+                <span>@Localizer["Record of"] @role.Name</span>
+            }
+        </HeaderTemplate>
+        <Template>
+            @if (context is RoleDto role)
+            {
+                <div>
+                    <div class="form-group">
+                        <label for="Id">@Localizer["ID"]</label>
+                        <SfTextBox ID="Id" Enabled="false" @bind-Value="@role.Id"></SfTextBox>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">@Localizer["Name"]</label>
+                        <SfTextBox ID="Name" Enabled="false" @bind-Value="@role.Name"></SfTextBox>
+                    </div>
+                    <div class="form-group">
+                        <label for="Description">@Localizer["Description"]</label>
+                        <SfTextBox ID="Description" Multiline="true" @bind-Value="@role.Description"></SfTextBox>
+                    </div>
+                </div>
+            }
+        </Template>
+    </GridEditSettings>
+    <GridColumns>
+        <GridColumn Field="@nameof(RoleDto.Id)" HeaderText="ID" IsPrimaryKey="true"></GridColumn>
+        <GridColumn Field="@nameof(RoleDto.Name)" HeaderText="Name">
+            <Template>
+                @if (context is RoleDto role)
+                {
+                    var url = $"/Manage/UserRoles/List/{role.Name}";
+                    <a href="@url">@role.Name</a>
+                }
+            </Template>
+        </GridColumn>
+        <GridColumn Field="@nameof(RoleDto.Description)" HeaderText="Description"></GridColumn>
+    </GridColumns>
+</SfGrid>
+
+<div class="mt-3">
+    <a href="/Manage/UserRoles/Edit">@Localizer["Manage user role"]</a>
+</div>
+
+@code {
+    private readonly string[] _toolbarItems = { "Edit", "Search" };
+    private readonly DialogSettings _dialogSettings = new();
+    private readonly ObservableCollection<RoleDto> _rolesCollection = new();
+    private MessageDialog _msgDialog;
+    private SfGrid<RoleDto> _grid;
+
+    protected override Task OnInitializedAsync()
+    {
+        _dialogSettings.EnableResize = true;
+        _dialogSettings.Width = "500px";
+        return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        var getRolesResponse = await ApiServer.GetRolesAsync();
+
+        if (_msgDialog.ShowIfHasApiErrors(getRolesResponse))
+            return;
+
+        _rolesCollection.AddRange(getRolesResponse.Data);
+    }
+
+    private async void GridActionComplete(ActionEventArgs<RoleDto> args)
+    {
+        var roleRecord = args.Data;
+
+        if (roleRecord == null)
+            return;
+
+        if (args.RequestType == Action.Save)
+        {
+            var updateRoleResponse = await ApiServer.UpdateRoleAsync(roleRecord);
+
+            if (_msgDialog.ShowIfHasApiErrors(updateRoleResponse))
+                args.Cancel = true;
+        }
+    }
+}

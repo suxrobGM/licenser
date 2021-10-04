@@ -1,0 +1,22 @@
+﻿@namespace Sms.Licensing.Web.Components
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationState
+
+@code {
+    [Parameter] public string LoginPageUrl { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        var authState = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (authState.User?.Identity is null || !authState.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo(LoginPageUrl, true);
+        }
+    }
+}

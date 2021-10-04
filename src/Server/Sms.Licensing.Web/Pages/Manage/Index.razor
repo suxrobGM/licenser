@@ -1,0 +1,43 @@
+﻿@page "/Manage"
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+@inject IStringLocalizer<Index> Localizer
+
+<h1>@Localizer["Site Administration"]</h1>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="bg-info">
+            <tr class="text-white">
+                <th>
+                    @Localizer["Management"]
+                </th>
+                <th>@Localizer["Action"]</th>
+            </tr>
+        </thead>
+
+        <tbody class="bg-white">
+            <tr>
+                <td>
+                    <a class="text-info font-weight-bolder" href="/Manage/Users">@Localizer["Users"]</a>
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-info" href="/Manage/Users/Create">
+                        <i class="fa fa-plus"></i> &nbsp;@Localizer["Add"]
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="text-info font-weight-bolder" href="/Manage/UserRoles">@Localizer["User Roles"]</a>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a class="text-info font-weight-bolder" href="/Manage/Licenses">@Localizer["Licenses"]</a>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

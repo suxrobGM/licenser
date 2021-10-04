@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Sms.Licensing.Client.Cli</AssemblyName>
+    <RootNamespace>Sms.Licensing.Client.Cli</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SDK\Sms.Licensing.Sdk.Client\Sms.Licensing.Sdk.Client.csproj" />
+  </ItemGroup>
+
+</Project>

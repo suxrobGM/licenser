@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Company>Smart Meal Service</Company>
+    <PackageTags>SmartMealService, SMS, SDK</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Sukhrob Ilyosbekov</Authors>
+    <Description>SMS API client and integration builtin classes</Description>
+    <Version>2.1.1</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <DocumentationFile>C:\Users\suxrobgm\source\SMS\Licensing\src\SDK\Sms.Licensing.Sdk.Client\Sms.Licensing.Sdk.Client.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <DocumentationFile>C:\Users\suxrobgm\source\SMS\Licensing\src\SDK\Sms.Licensing.Sdk.Client\Sms.Licensing.Sdk.Client.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DeviceId" Version="5.2.0" />
+    <PackageReference Include="IdentityModel" Version="5.0.1" />
+    <PackageReference Include="Quartz" Version="3.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Sms.Licensing.Shared\Sms.Licensing.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

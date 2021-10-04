@@ -1,0 +1,125 @@
+﻿@page "/Manage/Licenses/Create"
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Collections.ObjectModel
+@using Sms.Licensing.Core.Extensions
+@using Sms.Licensing.Sdk.Server.Abstractions
+@using Sms.Licensing.Shared.Models
+
+@inject IStringLocalizer<Index> Localizer
+@inject ISmsApiServer ApiServer
+@inject NavigationManager NavigationManager
+
+<h1>@Localizer["Create"]</h1>
+<h4>@Localizer["License"]</h4>
+<hr />
+
+<MessageDialog @ref="_msgDialog" />
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-5">
+        <EditForm Model="@_licenseModel" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="OwnerId">@Localizer["Client Name"]</label>
+                <SfComboBox ID="OwnerId" TItem="UserDto" TValue="string" DataSource="@_usersCollection" @bind-Value="@_licenseModel.OwnerUserName"
+                            IgnoreCase="true" IgnoreAccent="true">
+                    <ComboBoxFieldSettings Value="UserName"></ComboBoxFieldSettings>
+                </SfComboBox>
+            </div>
+            <div class="form-group">
+                <label for="MachineId">@Localizer["Machine ID"]</label>
+                <SfTextBox ID="MachineId" FloatLabelType="FloatLabelType.Auto" Placeholder="ex. adSy5Ftry-oHUjW5MUKOWl4" @bind-Value="@_licenseModel.MachineId" Enabled="false"></SfTextBox>
+            </div>
+            <div class="form-group">
+                <label for="ProductName">@Localizer["Product Name"]</label>
+                <SfTextBox ID="ProductName" @bind-Value="@_licenseModel.ProductName" Enabled="false"></SfTextBox>
+            </div>
+            <div class="form-group">
+                <label for="ObjectName">@Localizer["Object Name"]</label>
+                <SfTextBox ID="ObjectName" @bind-Value="@_licenseModel.ObjectName"></SfTextBox>
+            </div>
+            <div class="form-group">
+                <label for="IssueDate">@Localizer["Issue Date"]</label>
+                <SfDatePicker ID="IssueDate" @bind-Value="@_licenseModel.IssueDate" Enabled="false"></SfDatePicker>
+            </div>
+            <div class="form-group">
+                <label for="ExpiryDate">@Localizer["Expiry Date"]</label>
+                <SfDatePicker ID="ExpiryDate" @bind-Value="@_licenseModel.ExpiryDate"></SfDatePicker>
+            </div>
+            <button type="submit" class="btn btn-primary">@Localizer["Add"]</button>
+        </EditForm>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="/Manage/Users">@Localizer["Back to List"]</a>
+</div>
+
+@code {
+
+    private readonly ObservableCollection<UserDto> _usersCollection = new();
+    private readonly LicenseDto _licenseModel = new();
+    private MessageDialog _msgDialog;
+
+    public string ActivationId { get; set; }
+    public string ClientId { get; set; }
+    public string ProductName { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("ActivationId", out var activationIdValue))
+        {
+            ActivationId = activationIdValue.FirstOrDefault();
+        }
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("ClientId", out var clientIdValue))
+        {
+            ClientId = clientIdValue.FirstOrDefault();
+        }
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("ProductName", out var ProductNameValue))
+        {
+            ProductName = ProductNameValue.FirstOrDefault();
+        }
+
+        _licenseModel.MachineId = ActivationId;
+        _licenseModel.OwnerId = ClientId;
+        _licenseModel.ProductName = ProductName;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        var getUsersResponse = await ApiServer.GetUsersAsync();
+
+        if (_msgDialog.ShowIfHasApiErrors(getUsersResponse))
+            return;
+
+        var users = getUsersResponse.Data.Where(i => !i.UserRoles.Contains("SuperAdmin") &&
+                                                  !i.UserRoles.Contains("Admin"));
+
+        _usersCollection.AddRange(users);
+        if (!string.IsNullOrEmpty(ClientId))
+        {
+            _licenseModel.OwnerUserName = _usersCollection.FirstOrDefault(i => i.Id == ClientId)?.UserName;
+        }
+
+        StateHasChanged();
+    }
+
+    private async void HandleValidSubmit()
+    {
+        var apiResult = await ApiServer.AddLicenseAsync(_licenseModel);
+
+        if (_msgDialog.ShowIfHasApiErrors(apiResult))
+            return;
+
+        NavigationManager.NavigateTo("/Manage/Licenses");
+    }
+}

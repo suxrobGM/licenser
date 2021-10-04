@@ -1,0 +1,25 @@
+﻿@namespace Sms.Licensing.Web.Components
+
+@foreach (var userRole in UserRoles)
+{
+    if (userRole.Equals("SuperAdmin"))
+    {
+        <span class="badge badge-dark ml-1">@userRole</span>
+    }
+    else if (userRole.Equals("Admin"))
+    {
+        <span class="badge badge-secondary ml-1">@userRole</span>
+    }
+    else if (userRole.Equals("Client"))
+    {
+        <span class="badge badge-success ml-1">@userRole</span>
+    }
+    else
+    {
+        <span class="badge badge-light ml-1">@userRole</span>
+    }
+}
+
+@code {
+    [Parameter] public string[] UserRoles { get; set; }
+}

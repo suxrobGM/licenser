@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Sms.Licensing.Client.Activator": {
+      "commandName": "Project",
+      "commandLineArgs": "--product Kiosk1",
+      "environmentVariables": {
+        "ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

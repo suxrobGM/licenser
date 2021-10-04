@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sms.Licensing.Sdk.Server</name>
+    </assembly>
+    <members>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.GetLicenseAsync(System.String)">
+            <summary>
+            Get license by ID from API server
+            </summary>
+            <param name="id">License ID</param>
+            <returns>Licenses</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.GetLicensesAsync">
+            <summary>
+            Get all licenses from API server
+            </summary>
+            <returns>Licenses</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.AddLicenseAsync(Sms.Licensing.Shared.Models.LicenseDto)">
+            <summary>
+            Add new license item to API server
+            </summary>
+            <param name="license">License DTO type</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.UpdateLicenseAsync(Sms.Licensing.Shared.Models.LicenseDto)">
+            <summary>
+            Update existing license item to API server
+            </summary>
+            <param name="license">License DTO type</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.DeleteLicenseAsync(Sms.Licensing.Shared.Models.LicenseDto)">
+            <summary>
+            Delete license item from API server
+            </summary>
+            <param name="license">License DTO type</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.GetActivationRequestsAsync">
+            <summary>
+            Get list of activation requests.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.DeleteActivationRequestAsync(Sms.Licensing.Shared.Models.ActivationRequestDto)">
+            <summary>
+            Delete activation request.
+            </summary>
+            <param name="activationRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.GetUsersAsync">
+            <summary>
+            Get all user from API server
+            </summary>
+            <returns>Users</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.GetUsersInRoleAsync(System.String)">
+            <summary>
+            Get users who have specified role
+            </summary>
+            <returns>Users</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.AddUserAsync(Sms.Licensing.Shared.Models.UserDto)">
+            <summary>
+            Add new user to API server
+            </summary>
+            <param name="user">User DTO type</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.UpdateUserAsync(Sms.Licensing.Shared.Models.UserDto)">
+            <summary>
+            Update existing user to API server
+            </summary>
+            <param name="user">User DTO type</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.DeleteUserAsync(Sms.Licensing.Shared.Models.UserDto)">
+            <summary>
+            Delete user from API server
+            </summary>
+            <param name="user">User DTO type</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.GetRolesAsync">
+            <summary>
+            Get all roles from API server
+            </summary>
+            <returns>Roles</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.UpdateRoleAsync(Sms.Licensing.Shared.Models.RoleDto)">
+            <summary>
+            Update existing role to API server
+            </summary>
+            <param name="roleDto">Role DTO type</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.AssignRoleAsync(System.String,System.String)">
+            <summary>
+            Assign specified role to specified user
+            </summary>
+            <param name="roleName">Role name</param>
+            <param name="userId">User ID</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.RemoveRoleFromUserAsync(System.String,System.String)">
+            <summary>
+            Remove specified role from specified user
+            </summary>
+            <param name="roleName">Role name</param>
+            <param name="userId">User ID</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.Abstractions.ISmsApiServer.RemoveAllRolesFromUserAsync(System.String)">
+            <summary>
+            Remove all roles from specified user
+            </summary>
+            <param name="userId">User ID</param>
+            <returns>ApiResponse which indicates response status</returns>
+        </member>
+        <member name="T:Sms.Licensing.Sdk.Server.SmsApiServer">
+            <summary>
+            SmsApiServer is main class for interacting with SMS RESTful API services.
+            </summary>
+        </member>
+        <member name="M:Sms.Licensing.Sdk.Server.SmsApiServer.#ctor(Sms.Licensing.Sdk.Client.SmsApiClientOptions,Sms.Licensing.Shared.Models.ApiVersion)">
+            <summary>
+            Constructor for SmsApiServer class
+            </summary>
+            <param name="options">Server settings</param>
+            <param name="apiVersion">SMS API version</param>
+        </member>
+    </members>
+</doc>

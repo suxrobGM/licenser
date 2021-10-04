@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <DocumentationFile>C:\Users\suxrobgm\source\SMS\Licensing\src\Server\Sms.Licensing.Server.Sdk\Sms.Licensing.Server.Sdk.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sms.Licensing.Sdk.Client\Sms.Licensing.Sdk.Client.csproj" />
+  </ItemGroup>
+
+</Project>

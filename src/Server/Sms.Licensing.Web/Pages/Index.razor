@@ -1,0 +1,146 @@
+﻿@page "/"
+
+@using System.Collections.ObjectModel
+@using Sms.Licensing.Core.Extensions
+@using Sms.Licensing.Sdk.Server.Abstractions
+@using Sms.Licensing.Shared.Models
+
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+@inject IStringLocalizer<Index> Localizer
+@inject ISmsApiServer ApiServer
+
+<h1>SMS Web Application</h1>
+
+<MessageDialog @ref="_msgDialog" />
+<div>
+    <h3>@Localizer["Upcoming expiring licenses"]</h3>
+    <SfGrid @ref="_licensesGrid" DataSource="@_licensesCollection" AllowPaging="true" AllowResizing="true" AllowSorting="true">
+        <GridPageSettings PageSizes="new[]{15, 25, 50}" PageSize="25"></GridPageSettings>
+        <GridColumns>
+            <GridColumn Field="@nameof(LicenseDto.OwnerUserName)" HeaderText="Client Name"></GridColumn>
+            <GridColumn Field="@nameof(LicenseDto.ExpiryDate)" HeaderText="Expiry Date">
+                <Template>
+                    @if (context is LicenseDto license)
+                    {
+                        <CountRemainingDate ExpiringDateTime="license.ExpiryDate" />
+                        <span>&nbsp;(@license.ExpiryDate?.ToShortDateString())</span>
+                    }
+                </Template>
+            </GridColumn>
+            <GridColumn HeaderText="Action">
+                <Template>
+                    @if (context is LicenseDto license)
+                    {
+                        var licenseEditLink = $"/Manage/Licenses/Edit/{license.Id}";
+
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item p-0 mx-1 border-0">
+                                <a class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit license expire date"
+                                   href="@licenseEditLink">
+                                    <i class="fas fa-edit"></i> &nbsp;@Localizer["Edit"]
+                                </a>
+                            </li>
+                            <li class="list-group-item p-0 mx-1 border-0">
+                                @{
+                                    var emailMsg = $"Your license will expire in {license.ExpiryDate?.ToShortDateString()}";
+                                }
+                                <EmailSenderButton ButtonName="Notify" EmailAddress="@license.OwnerEmail" 
+                                                   EmailSubject="Subject about expiring license"
+                                                   EmailMessage="@emailMsg"
+                                                   MessageDialog="@_msgDialog"/>
+                            </li>
+                        </ul>
+                    }
+                </Template>
+            </GridColumn>
+        </GridColumns>
+    </SfGrid>
+</div>
+
+<div class="mt-5">
+    <h3>@Localizer["Activation Requests"]</h3>
+    <SfGrid @ref="_activationRequestsGrid" DataSource="@_activationRequestsCollection" AllowPaging="true" AllowResizing="true" AllowSorting="true"
+            Toolbar="@_activationRequestGridToolbar">
+        <GridPageSettings PageSizes="new[]{15, 25, 50}" PageSize="25"></GridPageSettings>
+        <GridEvents OnActionBegin="ActivationRequestsGridOnActionBegin" TValue="ActivationRequestDto" />
+        <GridEditSettings AllowDeleting="true" ShowDeleteConfirmDialog="true"></GridEditSettings>
+        <GridColumns>
+            <GridColumn Field="@nameof(ActivationRequestDto.RequestedClientUserName)" HeaderText="Client Username"></GridColumn>
+            <GridColumn Field="@nameof(ActivationRequestDto.ProductName)" HeaderText="Product Name"></GridColumn>
+            <GridColumn Field="@nameof(ActivationRequestDto.ActivationId)" HeaderText="Machine ID" IsPrimaryKey="true"></GridColumn>
+            <GridColumn Field="@nameof(ActivationRequestDto.Timestamp)" HeaderText="Timestamp"></GridColumn>
+            <GridColumn HeaderText="Action">
+                <Template>
+                    @if (context is ActivationRequestDto activationRequest)
+                    {
+                        <ul class="list-group list-group-horizontal">
+
+                            <li class="list-group-item p-0 mx-1 border-0">
+                                @{
+                                    var createLicenseLink = $"/Manage/Licenses/Create?ClientId={activationRequest.RequestedClientId}&" +
+                                                            $"ActivationId={activationRequest.ActivationId}&" +
+                                                            $"ProductName={activationRequest.ProductName}";
+                                }
+
+                                <a class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" title="Create new license for this client"
+                                   href="@createLicenseLink">
+                                    <i class="fas fa-edit"></i> &nbsp;@Localizer["Create License"]
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                </Template>
+            </GridColumn>
+        </GridColumns>
+    </SfGrid>
+</div>
+
+@code {
+    private readonly string[] _activationRequestGridToolbar = { "Delete" };
+    private readonly ObservableCollection<LicenseDto> _licensesCollection = new();
+    private readonly ObservableCollection<ActivationRequestDto> _activationRequestsCollection = new();
+    private SfGrid<LicenseDto> _licensesGrid;
+    private SfGrid<ActivationRequestDto> _activationRequestsGrid;
+    private MessageDialog _msgDialog;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        // Get list of licenses where expires within upcoming 1 months
+        var getLicensesResponse = await ApiServer.GetLicensesAsync();
+
+        if (_msgDialog.ShowIfHasApiErrors(getLicensesResponse))
+            return;
+
+        var getActivationRequestsResponse = await ApiServer.GetActivationRequestsAsync();
+
+        if (_msgDialog.ShowIfHasApiErrors(getActivationRequestsResponse))
+            return;
+
+        var activationRequests = getActivationRequestsResponse.Data;
+        var licenses = getLicensesResponse.Data
+            .Where(i => i.ExpiryDate < DateTime.Now.AddMonths(1) && i.ExpiryDate >= DateTime.Now)
+            .OrderBy(i => i.ExpiryDate);
+
+        _licensesCollection.AddRange(licenses);
+        _activationRequestsCollection.AddRange(activationRequests);
+    }
+
+    private async void ActivationRequestsGridOnActionBegin(ActionEventArgs<ActivationRequestDto> args)
+    {
+        var activationRequest = args.Data;
+
+        if (activationRequest == null)
+            return;
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Delete)
+        {
+            var deleteActivationRequestResponse = await ApiServer.DeleteActivationRequestAsync(activationRequest);
+
+            if (_msgDialog.ShowIfHasApiErrors(deleteActivationRequestResponse))
+                args.Cancel = true;
+        }
+    }
+}
