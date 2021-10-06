@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Sms.Licensing.Core.Extensions
+namespace Sms.Licensing.Domain.Extensions
 {
     public static class ObservableCollectionExtensions
     {

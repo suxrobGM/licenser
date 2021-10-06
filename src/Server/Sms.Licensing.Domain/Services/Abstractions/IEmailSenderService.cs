@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Sms.Licensing.Core.Services.Abstractions
+namespace Sms.Licensing.Domain.Services.Abstractions
 {
     public interface IEmailSenderService
     {

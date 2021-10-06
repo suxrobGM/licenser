@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Sms.Licensing.Core.Entities.Abstractions;
+using Sms.Licensing.Domain.Entities.Abstractions;
 
-namespace Sms.Licensing.Core.Repositories.Abstractions
+namespace Sms.Licensing.Domain.Repositories.Abstractions
 {
     /// <summary>
     /// Generic repository interface

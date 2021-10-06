@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using IdentityModel;
-using Sms.Licensing.Core.Entities;
+using Sms.Licensing.Domain.Entities;
 
 namespace Sms.IdentityServer
 {

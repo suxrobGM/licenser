@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Sms.Licensing.Core.Entities;
+using Sms.Licensing.Domain.Entities;
 using Sms.Licensing.Shared.Models;
 
 namespace Sms.Licensing.Api.Extensions

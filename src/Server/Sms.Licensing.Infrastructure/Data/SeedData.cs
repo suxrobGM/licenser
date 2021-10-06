@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sms.Licensing.Core.Entities;
+using Sms.Licensing.Domain.Entities;
 using Sms.Licensing.Shared.Models;
 
 namespace Sms.Licensing.Infrastructure.Data

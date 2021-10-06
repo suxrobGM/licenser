@@ -4,8 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Sms.Licensing.Core.Entities.Abstractions;
-using Sms.Licensing.Core.Repositories.Abstractions;
+using Sms.Licensing.Domain.Entities.Abstractions;
+using Sms.Licensing.Domain.Repositories.Abstractions;
 using Sms.Licensing.Infrastructure.Data;
 
 namespace Sms.Licensing.Infrastructure.Repositories

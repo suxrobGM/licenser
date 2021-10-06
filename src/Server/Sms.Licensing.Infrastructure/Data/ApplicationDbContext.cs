@@ -7,7 +7,7 @@ using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Extensions;
 using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
-using Sms.Licensing.Core.Entities;
+using Sms.Licensing.Domain.Entities;
 
 namespace Sms.Licensing.Infrastructure.Data
 {

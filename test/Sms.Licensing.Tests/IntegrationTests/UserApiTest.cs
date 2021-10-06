@@ -6,7 +6,7 @@ using Sms.Licensing.Shared.Models;
 
 namespace Sms.Licensing.Tests
 {
-    public class TestUserController : TestAuthenticationController
+    public class TestUserApi : TestAuthentication
     {
         [Fact]
         public async void TestUserRegister()
@@ -37,12 +37,12 @@ namespace Sms.Licensing.Tests
                 await AuthorizeAsAdmin(); // get access token before requesting
             }
 
-            var client = new UserDto()
+            var user = new UserDto()
             {
                 UserName = "TestClient"
             };
 
-            var clientJsonData = JsonSerializer.Serialize(client);
+            var clientJsonData = JsonSerializer.Serialize(user);
             var content = new StringContent(clientJsonData, Encoding.UTF8, "application/json");
             var response = await base.client.PostAsync("user/add-client", content);
             

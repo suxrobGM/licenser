@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Sms.Licensing.Core.Services.Abstractions;
+using Sms.Licensing.Domain.Services.Abstractions;
 
 namespace Sms.Licensing.Infrastructure.Services
 {

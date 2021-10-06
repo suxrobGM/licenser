@@ -8,7 +8,7 @@ using Sms.Licensing.Shared.Models;
 
 namespace Sms.Licensing.Tests
 {
-    public class TestLicenseController : TestAuthenticationController
+    public class TestLicenseApi : TestAuthentication
     {
         [Fact]
         public async void TestAddLicense()

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 using Syncfusion.Blazor;
 using Syncfusion.Licensing;
 
-using Sms.Licensing.Core.Services.Abstractions;
+using Sms.Licensing.Domain.Services.Abstractions;
 using Sms.Licensing.Infrastructure.Services;
 using Sms.Licensing.Sdk.Client;
 using Sms.Licensing.Sdk.Server;

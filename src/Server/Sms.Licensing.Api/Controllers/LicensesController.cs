@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 using Sms.Licensing.Api.Authorization;
 using Sms.Licensing.Api.Extensions;
-using Sms.Licensing.Core.Entities;
-using Sms.Licensing.Core.Repositories.Abstractions;
+using Sms.Licensing.Domain.Entities;
+using Sms.Licensing.Domain.Repositories.Abstractions;
 using Sms.Licensing.Shared.Models;
 
 namespace Sms.Licensing.Api.Controllers

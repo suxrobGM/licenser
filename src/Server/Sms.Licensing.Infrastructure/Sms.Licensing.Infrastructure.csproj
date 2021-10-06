@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sms.Licensing.Core\Sms.Licensing.Core.csproj" />
+    <ProjectReference Include="..\Sms.Licensing.Domain\Sms.Licensing.Domain.csproj" />
   </ItemGroup>
 
 </Project>

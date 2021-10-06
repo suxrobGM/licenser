@@ -125,7 +125,7 @@ namespace Sms.Licensing.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Sms.Licensing.Core.Entities.ApplicationRole", b =>
+            modelBuilder.Entity("Sms.Licensing.Domain.Entities.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -158,7 +158,7 @@ namespace Sms.Licensing.Infrastructure.Data.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Sms.Licensing.Core.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Sms.Licensing.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -226,7 +226,7 @@ namespace Sms.Licensing.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Sms.Licensing.Core.Entities.License", b =>
+            modelBuilder.Entity("Sms.Licensing.Domain.Entities.License", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -252,7 +252,7 @@ namespace Sms.Licensing.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Sms.Licensing.Core.Entities.ApplicationRole", null)
+                    b.HasOne("Sms.Licensing.Domain.Entities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -261,7 +261,7 @@ namespace Sms.Licensing.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Sms.Licensing.Core.Entities.ApplicationUser", null)
+                    b.HasOne("Sms.Licensing.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -270,7 +270,7 @@ namespace Sms.Licensing.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Sms.Licensing.Core.Entities.ApplicationUser", null)
+                    b.HasOne("Sms.Licensing.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -279,13 +279,13 @@ namespace Sms.Licensing.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Sms.Licensing.Core.Entities.ApplicationRole", null)
+                    b.HasOne("Sms.Licensing.Domain.Entities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Sms.Licensing.Core.Entities.ApplicationUser", null)
+                    b.HasOne("Sms.Licensing.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -294,23 +294,23 @@ namespace Sms.Licensing.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Sms.Licensing.Core.Entities.ApplicationUser", null)
+                    b.HasOne("Sms.Licensing.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Sms.Licensing.Core.Entities.License", b =>
+            modelBuilder.Entity("Sms.Licensing.Domain.Entities.License", b =>
                 {
-                    b.HasOne("Sms.Licensing.Core.Entities.ApplicationUser", "Owner")
+                    b.HasOne("Sms.Licensing.Domain.Entities.ApplicationUser", "Owner")
                         .WithMany("UserLicenses")
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Sms.Licensing.Core.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Sms.Licensing.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("UserLicenses");
                 });

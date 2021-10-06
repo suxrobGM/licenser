@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
-using Sms.Licensing.Core.Entities.Abstractions;
+using Sms.Licensing.Domain.Entities.Abstractions;
 
-namespace Sms.Licensing.Core.Entities
+namespace Sms.Licensing.Domain.Entities
 {
     public class ApplicationRole : IdentityRole, IEntity<string>
     {

@@ -1,4 +1,4 @@
-﻿namespace Sms.Licensing.Core.Entities.Abstractions
+﻿namespace Sms.Licensing.Domain.Entities.Abstractions
 {
     /// <summary>
     /// Interface to define database entity classes

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Sms.Licensing.Core.Entities;
-using Sms.Licensing.Core.Repositories.Abstractions;
+using Sms.Licensing.Domain.Entities;
+using Sms.Licensing.Domain.Repositories.Abstractions;
 using Sms.Licensing.Infrastructure.Data;
 using Sms.Licensing.Shared.Models;
 

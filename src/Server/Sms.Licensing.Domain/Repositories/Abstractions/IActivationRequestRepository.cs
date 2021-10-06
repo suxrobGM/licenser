@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Sms.Licensing.Core.Entities;
+using Sms.Licensing.Domain.Entities;
 using Sms.Licensing.Shared.Models;
 
-namespace Sms.Licensing.Core.Repositories.Abstractions
+namespace Sms.Licensing.Domain.Repositories.Abstractions
 {
     public interface IActivationRequestRepository : IRepository<ActivationRequest>
     {

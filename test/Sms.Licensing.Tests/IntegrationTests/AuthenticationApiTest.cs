@@ -10,12 +10,12 @@ using Sms.Licensing.Shared.Models;
 
 namespace Sms.Licensing.Tests
 {
-    public class TestAuthenticationController
+    public class TestAuthentication
     {
         protected readonly HttpClient client;
         protected readonly JsonSerializerOptions serializerOptions;
 
-        public TestAuthenticationController()
+        public TestAuthentication()
         {
             client = new HttpClient()
             {

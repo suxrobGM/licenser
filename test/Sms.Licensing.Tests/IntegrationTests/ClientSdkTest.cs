@@ -1,5 +1,4 @@
 using Sms.Licensing.Sdk.Client;
-using Sms.Licensing.Shared;
 using Sms.Licensing.Shared.Models;
 using Xunit;
 

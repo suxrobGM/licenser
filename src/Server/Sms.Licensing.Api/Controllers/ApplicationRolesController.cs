@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Sms.Licensing.Api.Authorization;
-using Sms.Licensing.Core.Entities;
+using Sms.Licensing.Domain.Entities;
 using Sms.Licensing.Shared.Models;
 
 namespace Sms.Licensing.Api.Controllers

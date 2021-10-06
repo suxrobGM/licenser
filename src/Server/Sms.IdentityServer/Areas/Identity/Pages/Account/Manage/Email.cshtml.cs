@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Sms.Licensing.Core.Entities;
-using Sms.Licensing.Core.Services.Abstractions;
+using Sms.Licensing.Domain.Entities;
+using Sms.Licensing.Domain.Services.Abstractions;
 
 namespace Sms.IdentityServer.Areas.Identity.Pages.Account.Manage
 {

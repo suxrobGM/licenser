@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Sms.Licensing.Core.Services.Abstractions;
-using Sms.Licensing.Core.Options;
+using Sms.Licensing.Domain.Services.Abstractions;
+using Sms.Licensing.Domain.Options;
 
 namespace Sms.Licensing.Infrastructure.Services
 {

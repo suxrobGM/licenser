@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-using Sms.Licensing.Core.Entities;
-using Sms.Licensing.Core.Services.Abstractions;
-using Sms.Licensing.Core.Options;
+using Sms.Licensing.Domain.Entities;
+using Sms.Licensing.Domain.Services.Abstractions;
+using Sms.Licensing.Domain.Options;
 
 namespace Sms.IdentityServer.Areas.Identity.Pages.Account
 {

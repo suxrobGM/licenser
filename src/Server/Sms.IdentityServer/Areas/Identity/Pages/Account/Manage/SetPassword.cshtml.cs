@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Sms.Licensing.Core.Entities;
+using Sms.Licensing.Domain.Entities;
 
 namespace Sms.IdentityServer.Areas.Identity.Pages.Account.Manage
 {

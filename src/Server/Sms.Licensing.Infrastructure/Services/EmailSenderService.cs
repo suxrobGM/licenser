@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Sms.Licensing.Core.Services.Abstractions;
+using Sms.Licensing.Domain.Services.Abstractions;
 
 namespace Sms.Licensing.Infrastructure.Services
 {

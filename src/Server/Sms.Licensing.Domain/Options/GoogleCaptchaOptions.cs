@@ -1,4 +1,4 @@
-﻿namespace Sms.Licensing.Core.Options
+﻿namespace Sms.Licensing.Domain.Options
 {
     public class GoogleCaptchaOptions
     {
