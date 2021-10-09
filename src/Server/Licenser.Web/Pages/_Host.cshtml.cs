@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Serilog;
-using Licenser.Sdk.Server.Abstractions;
+using Licenser.Sdk.Server;
 
 namespace Licenser.Web.Pages
 {

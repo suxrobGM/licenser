@@ -7,7 +7,7 @@ using Prism.Commands;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using Serilog;
-using Licenser.Sdk.Client.Abstractions;
+using Licenser.Sdk.Client;
 using Licenser.Shared;
 using Licenser.Shared.Models;
 

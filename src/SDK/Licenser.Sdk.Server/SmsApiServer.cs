@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Licenser.Sdk.Client;
-using Licenser.Sdk.Server.Abstractions;
 using Licenser.Shared.Models;
 
 namespace Licenser.Sdk.Server

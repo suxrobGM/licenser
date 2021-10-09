@@ -15,7 +15,6 @@ using Licenser.Domain.Services.Abstractions;
 using Licenser.Infrastructure.Services;
 using Licenser.Sdk.Client;
 using Licenser.Sdk.Server;
-using Licenser.Sdk.Server.Abstractions;
 using Licenser.Web.Authentication;
 using Licenser.Web.Resources;
 

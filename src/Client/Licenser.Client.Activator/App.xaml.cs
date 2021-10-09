@@ -7,7 +7,6 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using Serilog;
 using Licenser.Sdk.Client;
-using Licenser.Sdk.Client.Abstractions;
 
 namespace Licenser.Client.Activator
 {

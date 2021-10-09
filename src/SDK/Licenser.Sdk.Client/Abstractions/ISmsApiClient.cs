@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Licenser.Shared.Models;
 
-namespace Licenser.Sdk.Client.Abstractions
+namespace Licenser.Sdk.Client
 {
     public interface ISmsApiClient : ISmsApiAuthClient
     {

@@ -5,7 +5,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using IdentityModel.Client;
-using Licenser.Sdk.Client.Abstractions;
 using Licenser.Shared.Exceptions;
 using Licenser.Shared.Models;
 

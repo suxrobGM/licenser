@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Licenser.Sdk.Client.Abstractions;
 using Licenser.Shared;
 using Licenser.Shared.Models;
 

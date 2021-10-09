@@ -9,7 +9,7 @@
     <PackageTags>SmartMealService, SMS, SDK, Shared</PackageTags>
     <Version>2.1.0</Version>
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <DocumentationFile>.\Sms.Licensing.Shared.xml</DocumentationFile>
+    <DocumentationFile>.\Licenser.Shared.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

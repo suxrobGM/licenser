@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Licenser.Sdk.Client.Abstractions;
+using Licenser.Sdk.Client;
 using Licenser.Shared.Models;
 
-namespace Licenser.Sdk.Server.Abstractions
+namespace Licenser.Sdk.Server
 {
     public interface ISmsApiServer : ISmsApiAuthClient
     {

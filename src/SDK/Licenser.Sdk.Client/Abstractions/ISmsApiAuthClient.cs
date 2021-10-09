@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using IdentityModel.Client;
 using Licenser.Shared.Models;
 
-namespace Licenser.Sdk.Client.Abstractions
+namespace Licenser.Sdk.Client
 {
     /// <summary>
     /// SMS Api authentication client interface

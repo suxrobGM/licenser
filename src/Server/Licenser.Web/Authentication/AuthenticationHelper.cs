@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Licenser.Sdk.Server.Abstractions;
+using Licenser.Sdk.Server;
 
 namespace Licenser.Web.Authentication
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Licenser.Sdk.Client.Abstractions;
 using Licenser.Shared.Models;
 
 namespace Licenser.Sdk.Client
