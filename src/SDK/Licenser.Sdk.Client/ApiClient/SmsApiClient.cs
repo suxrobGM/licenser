@@ -42,14 +42,14 @@ namespace Licenser.Sdk.Client
                 return apiResponse;
             }
 
-            var license = new LicenseDto()
+            var license = new License()
             {
                 MachineId = KeyGenerator.GetMachineId(),
                 OwnerId = _userCredentials.Id,
                 ProductName = _clientOptions.ProductName
             };
 
-            apiResponse = await PostRequestAsync<LicenseStatus, LicenseDto>("licenses/check", license);
+            apiResponse = await PostRequestAsync<LicenseStatus, License>("licenses/check", license);
             return apiResponse;
         }
 
@@ -69,14 +69,14 @@ namespace Licenser.Sdk.Client
                 return apiResponse;
             }
 
-            var activationRequest = new ActivationRequestDto()
+            var activationRequest = new ActivationRequest()
             {
                 ActivationId = KeyGenerator.GetMachineId(),
                 RequestedClientId = _userCredentials.Id,
                 RequestedClientUserName = _userCredentials.UserName,
                 ProductName = _clientOptions.ProductName
             };
-            apiResponse = await PostRequestAsync<ActivationRequestStatus, ActivationRequestDto>("licenses/sendActivationRequest", activationRequest);
+            apiResponse = await PostRequestAsync<ActivationRequestStatus, ActivationRequest>("licenses/sendActivationRequest", activationRequest);
             return apiResponse;
         }
 

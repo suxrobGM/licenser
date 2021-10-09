@@ -8,18 +8,18 @@ using Licenser.Server.Domain.Entities;
 
 namespace Licenser.IdentityServer
 {
-    public class CustomClaimsFactory : UserClaimsPrincipalFactory<ApplicationUser>
+    public class CustomClaimsFactory : UserClaimsPrincipalFactory<User>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
         public CustomClaimsFactory(
-            UserManager<ApplicationUser> userManager,
+            UserManager<User> userManager,
             IOptions<IdentityOptions> optionsAccessor) : base(userManager, optionsAccessor)
         {
             _userManager = userManager;
         }
 
-        protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
+        protected override async Task<ClaimsIdentity> GenerateClaimsAsync(User user)
         {
             var identity = await base.GenerateClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);

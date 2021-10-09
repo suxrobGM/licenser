@@ -3,10 +3,12 @@ using Licenser.Server.Domain.Entities;
 using Licenser.Server.Domain.Repositories.Abstractions;
 using Licenser.Server.Infrastructure.Data;
 using Licenser.Shared.Models;
+using ActivationRequest = Licenser.Shared.Models.ActivationRequest;
+using License = Licenser.Shared.Models.License;
 
 namespace Licenser.Server.Infrastructure.Repositories
 {
-    public class ActivationRequestRepository : Repository<ActivationRequest>, IActivationRequestRepository
+    public class ActivationRequestRepository : Repository<Domain.Entities.ActivationRequest>, IActivationRequestRepository
     {
         private readonly ILicenseRepository _licenseRepository;
 
@@ -17,35 +19,35 @@ namespace Licenser.Server.Infrastructure.Repositories
         }
 
         /// <inheritdoc/>
-        public Task<ActivationRequest> GetAsync(LicenseDto licenseDto)
+        public Task<Domain.Entities.ActivationRequest> GetAsync(License license)
         {
             return GetAsync(i =>
-                i.ActivationId == licenseDto.MachineId &&
-                i.RequestedClientId == licenseDto.OwnerId &&
-                i.ProductName == licenseDto.ProductName);
+                i.ActivationId == license.MachineId &&
+                i.RequestedClientId == license.OwnerId &&
+                i.ProductName == license.ProductName);
         }
 
         /// <inheritdoc/>
-        public Task<ActivationRequest> GetAsync(ActivationRequestDto activationRequestDto)
+        public Task<Domain.Entities.ActivationRequest> GetAsync(ActivationRequest activationRequest)
         {
             return GetAsync(i =>
-                i.ActivationId == activationRequestDto.ActivationId &&
-                i.RequestedClientId == activationRequestDto.RequestedClientId &&
-                i.ProductName == activationRequestDto.ProductName);
+                i.ActivationId == activationRequest.ActivationId &&
+                i.RequestedClientId == activationRequest.RequestedClientId &&
+                i.ProductName == activationRequest.ProductName);
         }
 
         /// <inheritdoc/>
-        public async Task<ActivationRequestStatus> CreateActivationRequest(ActivationRequestDto activationRequestDto)
+        public async Task<ActivationRequestStatus> CreateActivationRequest(ActivationRequest activationRequest)
         {
             // check existing activation request
-            var existingRequest = await GetAsync(activationRequestDto);
+            var existingRequest = await GetAsync(activationRequest);
 
             // check existing license
-            var existingLicenseStatus = await _licenseRepository.CheckLicenseAsync(new LicenseDto()
+            var existingLicenseStatus = await _licenseRepository.CheckLicenseAsync(new License()
             {
-                MachineId = activationRequestDto.ActivationId,
-                OwnerId = activationRequestDto.RequestedClientId,
-                ProductName = activationRequestDto.ProductName
+                MachineId = activationRequest.ActivationId,
+                OwnerId = activationRequest.RequestedClientId,
+                ProductName = activationRequest.ProductName
             });
 
             if (existingLicenseStatus == LicenseStatus.Valid)
@@ -54,13 +56,13 @@ namespace Licenser.Server.Infrastructure.Repositories
             if (existingRequest != null) 
                 return ActivationRequestStatus.RequestAlreadyMade;
 
-            await AddAsync(new ActivationRequest()
+            await AddAsync(new Domain.Entities.ActivationRequest()
             {
-                Id = activationRequestDto.Id,
-                ActivationId = activationRequestDto.ActivationId,
-                RequestedClientId = activationRequestDto.RequestedClientId,
-                Timestamp = activationRequestDto.Timestamp,
-                ProductName = activationRequestDto.ProductName
+                Id = activationRequest.Id,
+                ActivationId = activationRequest.ActivationId,
+                RequestedClientId = activationRequest.RequestedClientId,
+                Timestamp = activationRequest.Timestamp,
+                ProductName = activationRequest.ProductName
             });
 
             return ActivationRequestStatus.RequestCreated;

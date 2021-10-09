@@ -23,13 +23,13 @@
 
             <div class="form-group">
                 <label for="UserName">@Localizer["Username"]</label>
-                <SfComboBox ID="UserName" TItem="UserDto" TValue="string" @bind-Value="UserName" DataSource="@_usersCollection">
+                <SfComboBox ID="UserName" TItem="User" TValue="string" @bind-Value="UserName" DataSource="@_usersCollection">
                     <ComboBoxFieldSettings Value="UserName"></ComboBoxFieldSettings>
                 </SfComboBox>
             </div>
             <div class="form-group">
                 <label for="UserRoles">@Localizer["User Roles"]</label>
-                <SfMultiSelect ID="UserRoles" TItem="RoleDto" TValue="string[]" @bind-Value="@Roles" DataSource="@_rolesCollection" Enabled="_canChangeRole">
+                <SfMultiSelect ID="UserRoles" TItem="Role" TValue="string[]" @bind-Value="@Roles" DataSource="@_rolesCollection" Enabled="_canChangeRole">
                     <MultiSelectFieldSettings Value="Name"></MultiSelectFieldSettings>
                 </SfMultiSelect>
             </div>
@@ -43,8 +43,8 @@
 </div>
 
 @code {
-    private readonly ObservableCollection<UserDto> _usersCollection = new();
-    private readonly ObservableCollection<RoleDto> _rolesCollection = new();
+    private readonly ObservableCollection<User> _usersCollection = new();
+    private readonly ObservableCollection<Role> _rolesCollection = new();
     private bool _canChangeRole; // Determine if user has Admin role then can not change others Admin role
     private string _userName;
     private AuthenticationState _authState;

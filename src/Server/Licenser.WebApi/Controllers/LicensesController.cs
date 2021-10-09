@@ -10,6 +10,9 @@ using Licenser.WebApi.Extensions;
 using Licenser.Server.Domain.Entities;
 using Licenser.Server.Domain.Repositories.Abstractions;
 using Licenser.Shared.Models;
+using ActivationRequest = Licenser.Shared.Models.ActivationRequest;
+using License = Licenser.Shared.Models.License;
+using User = Licenser.Server.Domain.Entities.User;
 
 namespace Licenser.WebApi.Controllers
 {
@@ -20,7 +23,7 @@ namespace Licenser.WebApi.Controllers
     {
         #region Fields
 
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILicenseRepository _licenseRepository;
         private readonly IActivationRequestRepository _activationRequestRepository;
 
@@ -28,7 +31,7 @@ namespace Licenser.WebApi.Controllers
 
         #region Constructor
 
-        public LicensesController(UserManager<ApplicationUser> userManager,
+        public LicensesController(UserManager<User> userManager,
             ILicenseRepository licenseRepository,
             IActivationRequestRepository activationRequestRepository)
         {
@@ -55,11 +58,11 @@ namespace Licenser.WebApi.Controllers
         /// <response code="200">Successful API response</response>
         [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<LicenseDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<License>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetLicenses()
         {
             var licensesDb = await _licenseRepository.GetListAsync();
-            var licensesDtoList = licensesDb.Select(licenseEntity => new LicenseDto()
+            var licensesDtoList = licensesDb.Select(licenseEntity => new License()
             {
                 Id = licenseEntity.Id,
                 MachineId = licenseEntity.MachineId,
@@ -72,7 +75,7 @@ namespace Licenser.WebApi.Controllers
                 OwnerEmail = licenseEntity.Owner?.Email,
             });
 
-            return Ok(new ApiResponse<IEnumerable<LicenseDto>>()
+            return Ok(new ApiResponse<IEnumerable<License>>()
             {
                 Status = ApiResponseStatus.Success,
                 Message = "Returned list of licenses",
@@ -96,15 +99,15 @@ namespace Licenser.WebApi.Controllers
         /// <response code="400">Bad request API response which indicates license could not found with specified ID</response>
         [HttpGet("{id}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [ProducesResponseType(typeof(ApiResponse<LicenseDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<LicenseDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<License>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<License>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetLicense(string id)
         {
             var licenseEntity = await _licenseRepository.GetByIdAsync(id);
 
             if (licenseEntity == null)
             {
-                return BadRequest(new ApiResponse<LicenseDto>()
+                return BadRequest(new ApiResponse<License>()
                 {
                     Status = ApiResponseStatus.Error,
                     Message = $"Could not found user with ID {id}",
@@ -112,7 +115,7 @@ namespace Licenser.WebApi.Controllers
                 });
             }
 
-            var license = new LicenseDto()
+            var license = new License()
             {
                 Id = licenseEntity.Id,
                 MachineId = licenseEntity.MachineId,
@@ -125,7 +128,7 @@ namespace Licenser.WebApi.Controllers
                 OwnerEmail = licenseEntity.Owner?.Email
             };
 
-            return Ok(new ApiResponse<LicenseDto>()
+            return Ok(new ApiResponse<License>()
             {
                 Status = ApiResponseStatus.Success,
                 Message = "Returned license data",
@@ -147,12 +150,12 @@ namespace Licenser.WebApi.Controllers
         /// <response code="200">Successful API response</response>
         [HttpGet("activationRequests")]
         [Authorize(Roles = "SuperAdmin,Admin")]
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<ActivationRequestDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<ActivationRequest>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetActivationRequests()
         {
             var activationRequestsDb = await _activationRequestRepository.GetListAsync();
 
-            var activationRequestDtoList = activationRequestsDb.Select(activationRequestEntity => new ActivationRequestDto()
+            var activationRequestDtoList = activationRequestsDb.Select(activationRequestEntity => new ActivationRequest()
             {
                 Id = activationRequestEntity.Id, 
                 ActivationId = activationRequestEntity.ActivationId,
@@ -162,7 +165,7 @@ namespace Licenser.WebApi.Controllers
                 Timestamp = activationRequestEntity.Timestamp
             });
             
-            return Ok(new ApiResponse<IEnumerable<ActivationRequestDto>>()
+            return Ok(new ApiResponse<IEnumerable<ActivationRequest>>()
             {
                 Status = ApiResponseStatus.Success,
                 Message = "Returned list of activation requests",
@@ -197,7 +200,7 @@ namespace Licenser.WebApi.Controllers
         [Authorize(Policy = Policies.IsAdmin)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> AddLicense([FromBody] LicenseDto license)
+        public async Task<IActionResult> AddLicense([FromBody] License license)
         {
             var user = await _userManager.FindUserAsync(new UserAdvancedCredentials()
             {
@@ -254,7 +257,7 @@ namespace Licenser.WebApi.Controllers
         [HttpPost("check")]
         [Authorize(Policy = Policies.IsClient)]
         [ProducesResponseType(typeof(ApiResponse<LicenseStatus>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> CheckLicense([FromBody] LicenseDto license)
+        public async Task<IActionResult> CheckLicense([FromBody] License license)
         {
             var licenseStatus = await _licenseRepository.CheckLicenseAsync(license);
             return Ok(new ApiResponse<LicenseStatus>()
@@ -286,7 +289,7 @@ namespace Licenser.WebApi.Controllers
         [HttpPost("sendActivationRequest")]
         [Authorize(Policy = Policies.IsClient)]
         [ProducesResponseType(typeof(ApiResponse<ActivationRequestStatus>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> SendActivationRequest([FromBody] ActivationRequestDto activationRequest)
+        public async Task<IActionResult> SendActivationRequest([FromBody] ActivationRequest activationRequest)
         {
             var clientCredentials = new UserAdvancedCredentials()
             {
@@ -346,7 +349,7 @@ namespace Licenser.WebApi.Controllers
         [Authorize(Policy = Policies.IsAdmin)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateLicense(string id, [FromBody] LicenseDto license)
+        public async Task<IActionResult> UpdateLicense(string id, [FromBody] License license)
         {
             var licenseEntity = await _licenseRepository.GetByIdAsync(id);
 

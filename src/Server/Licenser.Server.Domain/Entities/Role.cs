@@ -1,20 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using Licenser.Server.Domain.Entities.Abstractions;
 using Microsoft.AspNetCore.Identity;
 
 namespace Licenser.Server.Domain.Entities
 {
-    public class ApplicationUser : IdentityUser, IEntity<string>
+    public class Role : IdentityRole, IEntity<string>
     {
-        public override string Id { get; set; } = Guid.NewGuid().ToString();
-        public DateTime Timestamp { get; set; } = DateTime.Now;
+        public Role()
+        {
 
-        public virtual IList<License> UserLicenses { get; set; } = new List<License>();
+        }
+
+        public Role(string roleName) : base(roleName)
+        {
+
+        }
+
+        public override string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Description { get; set; }
+        public DateTime Timestamp { get; set; } = DateTime.Now;
 
         public override string ToString()
         {
-            return UserName;
+            return Name;
         }
     }
 }

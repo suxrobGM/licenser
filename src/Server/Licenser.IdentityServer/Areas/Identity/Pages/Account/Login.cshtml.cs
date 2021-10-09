@@ -19,13 +19,13 @@ namespace Licenser.IdentityServer.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IGoogleCaptchaService _googleCaptcha;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager,
+        public LoginModel(SignInManager<User> signInManager,
+            UserManager<User> userManager,
             GoogleCaptchaOptions captchaOptions,
             ILogger<LoginModel> logger,
             IGoogleCaptchaService googleCaptcha)
@@ -115,7 +115,7 @@ namespace Licenser.IdentityServer.Areas.Identity.Pages.Account
             if (!ModelState.IsValid) 
                 return Page();
 
-            ApplicationUser user;
+            User user;
             if (Input.Username.IndexOf('@') > -1)
             {
                 user = await _userManager.FindByEmailAsync(Input.Username);

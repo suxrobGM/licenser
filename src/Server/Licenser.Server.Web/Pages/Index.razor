@@ -17,10 +17,10 @@
     <SfGrid @ref="_licensesGrid" DataSource="@_licensesCollection" AllowPaging="true" AllowResizing="true" AllowSorting="true">
         <GridPageSettings PageSizes="new[]{15, 25, 50}" PageSize="25"></GridPageSettings>
         <GridColumns>
-            <GridColumn Field="@nameof(LicenseDto.OwnerUserName)" HeaderText="Client Name"></GridColumn>
-            <GridColumn Field="@nameof(LicenseDto.ExpiryDate)" HeaderText="Expiry Date">
+            <GridColumn Field="@nameof(License.OwnerUserName)" HeaderText="Client Name"></GridColumn>
+            <GridColumn Field="@nameof(License.ExpiryDate)" HeaderText="Expiry Date">
                 <Template>
-                    @if (context is LicenseDto license)
+                    @if (context is License license)
                     {
                         <CountRemainingDate ExpiringDateTime="license.ExpiryDate" />
                         <span>&nbsp;(@license.ExpiryDate?.ToShortDateString())</span>
@@ -29,7 +29,7 @@
             </GridColumn>
             <GridColumn HeaderText="Action">
                 <Template>
-                    @if (context is LicenseDto license)
+                    @if (context is License license)
                     {
                         var licenseEditLink = $"/Manage/Licenses/Edit/{license.Id}";
 
@@ -62,16 +62,16 @@
     <SfGrid @ref="_activationRequestsGrid" DataSource="@_activationRequestsCollection" AllowPaging="true" AllowResizing="true" AllowSorting="true"
             Toolbar="@_activationRequestGridToolbar">
         <GridPageSettings PageSizes="new[]{15, 25, 50}" PageSize="25"></GridPageSettings>
-        <GridEvents OnActionBegin="ActivationRequestsGridOnActionBegin" TValue="ActivationRequestDto" />
+        <GridEvents OnActionBegin="ActivationRequestsGridOnActionBegin" TValue="ActivationRequest" />
         <GridEditSettings AllowDeleting="true" ShowDeleteConfirmDialog="true"></GridEditSettings>
         <GridColumns>
-            <GridColumn Field="@nameof(ActivationRequestDto.RequestedClientUserName)" HeaderText="Client Username"></GridColumn>
-            <GridColumn Field="@nameof(ActivationRequestDto.ProductName)" HeaderText="Product Name"></GridColumn>
-            <GridColumn Field="@nameof(ActivationRequestDto.ActivationId)" HeaderText="Machine ID" IsPrimaryKey="true"></GridColumn>
-            <GridColumn Field="@nameof(ActivationRequestDto.Timestamp)" HeaderText="Timestamp"></GridColumn>
+            <GridColumn Field="@nameof(ActivationRequest.RequestedClientUserName)" HeaderText="Client Username"></GridColumn>
+            <GridColumn Field="@nameof(ActivationRequest.ProductName)" HeaderText="Product Name"></GridColumn>
+            <GridColumn Field="@nameof(ActivationRequest.ActivationId)" HeaderText="Machine ID" IsPrimaryKey="true"></GridColumn>
+            <GridColumn Field="@nameof(ActivationRequest.Timestamp)" HeaderText="Timestamp"></GridColumn>
             <GridColumn HeaderText="Action">
                 <Template>
-                    @if (context is ActivationRequestDto activationRequest)
+                    @if (context is ActivationRequest activationRequest)
                     {
                         <ul class="list-group list-group-horizontal">
 
@@ -97,10 +97,10 @@
 
 @code {
     private readonly string[] _activationRequestGridToolbar = { "Delete" };
-    private readonly ObservableCollection<LicenseDto> _licensesCollection = new();
-    private readonly ObservableCollection<ActivationRequestDto> _activationRequestsCollection = new();
-    private SfGrid<LicenseDto> _licensesGrid;
-    private SfGrid<ActivationRequestDto> _activationRequestsGrid;
+    private readonly ObservableCollection<License> _licensesCollection = new();
+    private readonly ObservableCollection<ActivationRequest> _activationRequestsCollection = new();
+    private SfGrid<License> _licensesGrid;
+    private SfGrid<ActivationRequest> _activationRequestsGrid;
     private MessageDialog _msgDialog;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -128,7 +128,7 @@
         _activationRequestsCollection.AddRange(activationRequests);
     }
 
-    private async void ActivationRequestsGridOnActionBegin(ActionEventArgs<ActivationRequestDto> args)
+    private async void ActivationRequestsGridOnActionBegin(ActionEventArgs<ActivationRequest> args)
     {
         var activationRequest = args.Data;
 

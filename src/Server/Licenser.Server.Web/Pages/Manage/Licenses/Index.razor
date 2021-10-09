@@ -15,18 +15,18 @@
 <MessageDialog @ref="_msgDialog" />
 <SfGrid @ref="_grid" DataSource="@_licensesCollection" AllowPaging="true" AllowResizing="true" AllowSorting="true" Toolbar="@_toolbarItems">
     <GridPageSettings PageSizes="new[]{15, 25, 50}" PageSize="25"></GridPageSettings>
-    <GridEvents OnActionComplete="GridActionComplete" TValue="LicenseDto"></GridEvents>
+    <GridEvents OnActionComplete="GridActionComplete" TValue="License"></GridEvents>
     <GridEditSettings AllowEditing="true" AllowDeleting="true"
                       ShowDeleteConfirmDialog="true" ShowConfirmDialog="true" Mode="EditMode.Dialog" Dialog="_dialogSettings">
         <HeaderTemplate>
-            @if (context is LicenseDto license)
+            @if (context is License license)
             {
                 <span>@Localizer["Record of"] @license.OwnerUserName @license.ProductName</span>
             }
         </HeaderTemplate>
         <Template>
             @{
-                if (context is LicenseDto license)
+                if (context is License license)
                 {
                     <div>
                         <div class="form-group">
@@ -35,7 +35,7 @@
                         </div>
                         <div class="form-group">
                             <label for="OwnerId">@Localizer["Client Name"]</label>
-                            <SfComboBox ID="OwnerId" TItem="UserDto" TValue="string" @bind-Value="@license.OwnerUserName" DataSource="@_usersCollection">
+                            <SfComboBox ID="OwnerId" TItem="User" TValue="string" @bind-Value="@license.OwnerUserName" DataSource="@_usersCollection">
                                 <ComboBoxFieldSettings Value="UserName"></ComboBoxFieldSettings>
                             </SfComboBox>
                         </div>
@@ -65,16 +65,16 @@
         </Template>
     </GridEditSettings>
     <GridColumns>
-        <GridColumn Field="@nameof(LicenseDto.Id)" HeaderText="ID" IsPrimaryKey="true"></GridColumn>
-        <GridColumn Field="@nameof(LicenseDto.MachineId)" HeaderText="Machine ID" ValidationRules="@(new ValidationRules{ Required = true })"></GridColumn>
-        <GridColumn Field="@nameof(LicenseDto.OwnerUserName)" HeaderText="Client Name" ValidationRules="@(new ValidationRules{ Required = true })"></GridColumn>
-        <GridColumn Field="@nameof(LicenseDto.ProductName)" HeaderText="Product Name" ValidationRules="@(new ValidationRules{ Required = true })"></GridColumn>
-        <GridColumn Field="@nameof(LicenseDto.ObjectName)" HeaderText="Object Name"></GridColumn>
-        <GridColumn Field="@nameof(LicenseDto.IssueDate)" HeaderText="Issue Date"></GridColumn>
-        <GridColumn Field="@nameof(LicenseDto.ExpiryDate)" HeaderText="Expiry Date" ValidationRules="@(new ValidationRules{ Required = true })">
+        <GridColumn Field="@nameof(License.Id)" HeaderText="ID" IsPrimaryKey="true"></GridColumn>
+        <GridColumn Field="@nameof(License.MachineId)" HeaderText="Machine ID" ValidationRules="@(new ValidationRules{ Required = true })"></GridColumn>
+        <GridColumn Field="@nameof(License.OwnerUserName)" HeaderText="Client Name" ValidationRules="@(new ValidationRules{ Required = true })"></GridColumn>
+        <GridColumn Field="@nameof(License.ProductName)" HeaderText="Product Name" ValidationRules="@(new ValidationRules{ Required = true })"></GridColumn>
+        <GridColumn Field="@nameof(License.ObjectName)" HeaderText="Object Name"></GridColumn>
+        <GridColumn Field="@nameof(License.IssueDate)" HeaderText="Issue Date"></GridColumn>
+        <GridColumn Field="@nameof(License.ExpiryDate)" HeaderText="Expiry Date" ValidationRules="@(new ValidationRules{ Required = true })">
             <Template>
                 @{
-                    if (context is LicenseDto license)
+                    if (context is License license)
                     {
                         <span>
                             @license.ExpiryDate?.ToShortDateString()&nbsp;
@@ -92,11 +92,11 @@
 
 @code {
     private readonly string[] _toolbarItems = { "Edit", "Delete", "Search" };
-    private readonly ObservableCollection<LicenseDto> _licensesCollection = new();
-    private readonly ObservableCollection<UserDto> _usersCollection = new();
+    private readonly ObservableCollection<License> _licensesCollection = new();
+    private readonly ObservableCollection<User> _usersCollection = new();
     private readonly DialogSettings _dialogSettings = new();
     private MessageDialog _msgDialog;
-    private SfGrid<LicenseDto> _grid;
+    private SfGrid<License> _grid;
 
     protected override Task OnInitializedAsync()
     {
@@ -124,7 +124,7 @@
         _licensesCollection.AddRange(getLicensesResponse.Data);
     }
 
-    private async void GridActionComplete(ActionEventArgs<LicenseDto> args)
+    private async void GridActionComplete(ActionEventArgs<License> args)
     {
         var licenseRecord = args.Data;
 

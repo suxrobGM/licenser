@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 <label for="OwnerId">@Localizer["Client Name"]</label>
-                <SfComboBox ID="OwnerId" TItem="UserDto" TValue="string" DataSource="@_usersCollection" @bind-Value="@_licenseModel.OwnerUserName"
+                <SfComboBox ID="OwnerId" TItem="User" TValue="string" DataSource="@_usersCollection" @bind-Value="@_licenseModel.OwnerUserName"
                             IgnoreCase="true" IgnoreAccent="true">
                     <ComboBoxFieldSettings Value="UserName"></ComboBoxFieldSettings>
                 </SfComboBox>
@@ -60,8 +60,8 @@
 
 @code {
 
-    private readonly ObservableCollection<UserDto> _usersCollection = new();
-    private readonly LicenseDto _licenseModel = new();
+    private readonly ObservableCollection<User> _usersCollection = new();
+    private readonly License _licenseModel = new();
     private MessageDialog _msgDialog;
 
     public string ActivationId { get; set; }

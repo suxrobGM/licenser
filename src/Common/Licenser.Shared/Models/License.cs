@@ -2,9 +2,9 @@
 
 namespace Licenser.Shared.Models
 {
-    public class LicenseDto
+    public class License
     {
-        public LicenseDto()
+        public License()
         {
             Id = Guid.NewGuid().ToString();
             IssueDate = DateTime.Now;

@@ -125,7 +125,7 @@ namespace Licenser.Server.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Licenser.Server.Domain.Entities.ApplicationRole", b =>
+            modelBuilder.Entity("Licenser.Server.Domain.Entities.Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -158,7 +158,7 @@ namespace Licenser.Server.Infrastructure.Data.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Licenser.Server.Domain.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Licenser.Server.Domain.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -252,7 +252,7 @@ namespace Licenser.Server.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Licenser.Server.Domain.Entities.ApplicationRole", null)
+                    b.HasOne("Licenser.Server.Domain.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -261,7 +261,7 @@ namespace Licenser.Server.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Licenser.Server.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Licenser.Server.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -270,7 +270,7 @@ namespace Licenser.Server.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Licenser.Server.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Licenser.Server.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -279,13 +279,13 @@ namespace Licenser.Server.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Licenser.Server.Domain.Entities.ApplicationRole", null)
+                    b.HasOne("Licenser.Server.Domain.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Licenser.Server.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Licenser.Server.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -294,7 +294,7 @@ namespace Licenser.Server.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Licenser.Server.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Licenser.Server.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -303,14 +303,14 @@ namespace Licenser.Server.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Licenser.Server.Domain.Entities.License", b =>
                 {
-                    b.HasOne("Licenser.Server.Domain.Entities.ApplicationUser", "Owner")
+                    b.HasOne("Licenser.Server.Domain.Entities.User", "Owner")
                         .WithMany("UserLicenses")
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Licenser.Server.Domain.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Licenser.Server.Domain.Entities.User", b =>
                 {
                     b.Navigation("UserLicenses");
                 });

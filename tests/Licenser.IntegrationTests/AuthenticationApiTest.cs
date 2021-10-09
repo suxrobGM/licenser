@@ -31,7 +31,7 @@ namespace Licenser.IntegrationTests
         [Fact]
         public async Task AuthorizeAsAdmin()
         {
-            var admin = new UserDto()
+            var admin = new User()
             {
                 UserName = "SuxrobGM",
                 Password = "Password123"
@@ -57,7 +57,7 @@ namespace Licenser.IntegrationTests
         [Fact]
         public async void TestFakeAuthorization()
         {
-            var fakeClient = new UserDto()
+            var fakeClient = new User()
             {
                 UserName = "FakeClient",
                 Password = "Password123"

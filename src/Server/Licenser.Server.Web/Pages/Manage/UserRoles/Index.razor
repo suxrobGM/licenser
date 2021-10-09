@@ -14,16 +14,16 @@
 
 <MessageDialog @ref="_msgDialog" />
 <SfGrid @ref="_grid" DataSource="@_rolesCollection" AllowResizing="true" AllowSorting="true" Toolbar="@_toolbarItems">
-    <GridEvents OnActionComplete="GridActionComplete" TValue="RoleDto"></GridEvents>
+    <GridEvents OnActionComplete="GridActionComplete" TValue="Role"></GridEvents>
     <GridEditSettings AllowEditing="true" ShowConfirmDialog="true" Mode="EditMode.Dialog" Dialog="_dialogSettings">
         <HeaderTemplate>
-            @if (context is RoleDto role)
+            @if (context is Role role)
             {
                 <span>@Localizer["Record of"] @role.Name</span>
             }
         </HeaderTemplate>
         <Template>
-            @if (context is RoleDto role)
+            @if (context is Role role)
             {
                 <div>
                     <div class="form-group">
@@ -43,17 +43,17 @@
         </Template>
     </GridEditSettings>
     <GridColumns>
-        <GridColumn Field="@nameof(RoleDto.Id)" HeaderText="ID" IsPrimaryKey="true"></GridColumn>
-        <GridColumn Field="@nameof(RoleDto.Name)" HeaderText="Name">
+        <GridColumn Field="@nameof(Role.Id)" HeaderText="ID" IsPrimaryKey="true"></GridColumn>
+        <GridColumn Field="@nameof(Role.Name)" HeaderText="Name">
             <Template>
-                @if (context is RoleDto role)
+                @if (context is Role role)
                 {
                     var url = $"/Manage/UserRoles/List/{role.Name}";
                     <a href="@url">@role.Name</a>
                 }
             </Template>
         </GridColumn>
-        <GridColumn Field="@nameof(RoleDto.Description)" HeaderText="Description"></GridColumn>
+        <GridColumn Field="@nameof(Role.Description)" HeaderText="Description"></GridColumn>
     </GridColumns>
 </SfGrid>
 
@@ -64,9 +64,9 @@
 @code {
     private readonly string[] _toolbarItems = { "Edit", "Search" };
     private readonly DialogSettings _dialogSettings = new();
-    private readonly ObservableCollection<RoleDto> _rolesCollection = new();
+    private readonly ObservableCollection<Role> _rolesCollection = new();
     private MessageDialog _msgDialog;
-    private SfGrid<RoleDto> _grid;
+    private SfGrid<Role> _grid;
 
     protected override Task OnInitializedAsync()
     {
@@ -88,7 +88,7 @@
         _rolesCollection.AddRange(getRolesResponse.Data);
     }
 
-    private async void GridActionComplete(ActionEventArgs<RoleDto> args)
+    private async void GridActionComplete(ActionEventArgs<Role> args)
     {
         var roleRecord = args.Data;
 

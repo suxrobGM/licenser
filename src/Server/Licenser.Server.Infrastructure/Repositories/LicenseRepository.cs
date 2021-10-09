@@ -4,57 +4,58 @@ using Licenser.Server.Domain.Entities;
 using Licenser.Server.Domain.Repositories.Abstractions;
 using Licenser.Server.Infrastructure.Data;
 using Licenser.Shared.Models;
+using License = Licenser.Shared.Models.License;
 
 namespace Licenser.Server.Infrastructure.Repositories
 {
     /// <summary>
     /// Repository for license entity.
     /// </summary>
-    public class LicenseRepository : Repository<License>, ILicenseRepository
+    public class LicenseRepository : Repository<Domain.Entities.License>, ILicenseRepository
     {
         public LicenseRepository(ApplicationDbContext context) : base(context)
         {
         }
 
         /// <inheritdoc/>
-        public Task<License> GetAsync(LicenseDto licenseDto)
+        public Task<Domain.Entities.License> GetAsync(License license)
         {
-            return GetAsync(i => i.MachineId == licenseDto.MachineId && 
-                                       i.OwnerId == licenseDto.OwnerId && 
-                                       i.ProductName == licenseDto.ProductName);
+            return GetAsync(i => i.MachineId == license.MachineId && 
+                                       i.OwnerId == license.OwnerId && 
+                                       i.ProductName == license.ProductName);
         }
 
         /// <inheritdoc/>
-        public async Task AddLicenseAsync(LicenseDto licenseDto)
+        public async Task AddLicenseAsync(License license)
         {
-            var existingLicense = await GetAsync(licenseDto);
+            var existingLicense = await GetAsync(license);
 
             if (existingLicense == null)
             {
                 // add new license with machine ID
-                await AddAsync(new License()
+                await AddAsync(new Domain.Entities.License()
                 {
-                    Id = licenseDto.Id,
-                    MachineId = licenseDto.MachineId,
-                    OwnerId = licenseDto.OwnerId,
-                    ObjectName = licenseDto.ObjectName,
-                    ProductName = licenseDto.ProductName,
-                    IssueDate = licenseDto.IssueDate,
-                    ExpiryDate = licenseDto.ExpiryDate
+                    Id = license.Id,
+                    MachineId = license.MachineId,
+                    OwnerId = license.OwnerId,
+                    ObjectName = license.ObjectName,
+                    ProductName = license.ProductName,
+                    IssueDate = license.IssueDate,
+                    ExpiryDate = license.ExpiryDate
                 });
             }
             else
             {
                 // if license exists then update only expiry date!
-                existingLicense.ExpiryDate = licenseDto.ExpiryDate;
+                existingLicense.ExpiryDate = license.ExpiryDate;
                 await UpdateAsync(existingLicense);
             }
         }
 
         /// <inheritdoc/>
-        public async Task<LicenseStatus> CheckLicenseAsync(LicenseDto licenseDto)
+        public async Task<LicenseStatus> CheckLicenseAsync(License license)
         {
-            var existingLicense = await GetAsync(licenseDto);
+            var existingLicense = await GetAsync(license);
 
             if (existingLicense == null)
             {

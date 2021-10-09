@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Licenser.Server.Domain.Entities;
 using Licenser.Shared.Models;
+using Role = Licenser.Shared.Models.Role;
+using User = Licenser.Server.Domain.Entities.User;
 
 namespace Licenser.WebApi.Controllers
 {
@@ -20,15 +21,15 @@ namespace Licenser.WebApi.Controllers
     {
         #region Fields
 
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Server.Domain.Entities.Role> _roleManager;
 
         #endregion
 
         #region Constructor
 
-        public ApplicationRolesController(UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager)
+        public ApplicationRolesController(UserManager<User> userManager,
+            RoleManager<Server.Domain.Entities.Role> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -51,18 +52,18 @@ namespace Licenser.WebApi.Controllers
         /// <returns>List of Role DTO schemes</returns>
         /// <response code="200">Successful API response</response>
         [HttpGet]
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<RoleDto>>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<RoleDto>>> GetRoles()
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<Role>>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
         {
             var rolesDb = await _roleManager.Roles.ToListAsync();
-            var rolesDtoList = rolesDb.Select(roleEntity => new RoleDto()
+            var rolesDtoList = rolesDb.Select(roleEntity => new Role()
             {
                 Id = roleEntity.Id, 
                 Name = roleEntity.Name, 
                 Description = roleEntity.Description
             }).ToList();
 
-            return Ok(new ApiResponse<IEnumerable<RoleDto>>()
+            return Ok(new ApiResponse<IEnumerable<Role>>()
             {
                 Status = ApiResponseStatus.Success,
                 Message = "Returned list of roles",
@@ -88,14 +89,14 @@ namespace Licenser.WebApi.Controllers
         /// 
         /// </remarks>
         /// <param name="id">Role ID</param>
-        /// <param name="roleDto">Role DTO scheme</param>
+        /// <param name="role">Role DTO scheme</param>
         /// <returns>ApiResponse which indicates response status</returns>
         /// <response code="200">Successful API response</response>
         /// <response code="400">Bad request API response which indicates license could not found with specified ID</response>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<AccessToken>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateApplicationRole(string id, [FromBody] RoleDto roleDto)
+        public async Task<IActionResult> UpdateApplicationRole(string id, [FromBody] Role role)
         {
             var roleEntity = await _roleManager.FindByIdAsync(id);
 
@@ -108,7 +109,7 @@ namespace Licenser.WebApi.Controllers
                 });
             }
 
-            roleEntity.Description = roleDto.Description;
+            roleEntity.Description = role.Description;
             await _roleManager.UpdateAsync(roleEntity);
 
             return Ok(new ApiResponse()

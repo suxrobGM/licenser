@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Licenser.Server.Domain.Entities;
 using Licenser.Shared.Models;
+using User = Licenser.Server.Domain.Entities.User;
 
 namespace Licenser.WebApi.Extensions
 {
@@ -13,9 +14,9 @@ namespace Licenser.WebApi.Extensions
         /// <param name="userManager">UserManager class</param>
         /// <param name="userDto">User DTO class</param>
         /// <returns>User</returns>
-        public static async Task<ApplicationUser> FindUserAsync(this UserManager<ApplicationUser> userManager, UserAdvancedCredentials userDto)
+        public static async Task<User> FindUserAsync(this UserManager<User> userManager, UserAdvancedCredentials userDto)
         {
-            ApplicationUser user = null;
+            User user = null;
 
             if (!string.IsNullOrEmpty(userDto.Id))
             {

@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Licenser.Server.Domain.Entities;
 using Licenser.Shared.Models;
+using Role = Licenser.Server.Domain.Entities.Role;
+using User = Licenser.Shared.Models.User;
 
 namespace Licenser.Server.Infrastructure.Data
 {
@@ -36,22 +38,22 @@ namespace Licenser.Server.Infrastructure.Data
         {
             try
             {
-                var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+                var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
                 var superAdminRole = await roleManager.RoleExistsAsync("SuperAdmin");
                 var adminRole = await roleManager.RoleExistsAsync("Admin");
                 var clientRole = await roleManager.RoleExistsAsync("Client");
 
                 if (!superAdminRole)
                 {
-                    await roleManager.CreateAsync(new ApplicationRole("SuperAdmin"));
+                    await roleManager.CreateAsync(new Role("SuperAdmin"));
                 }
                 if (!adminRole)
                 {
-                    await roleManager.CreateAsync(new ApplicationRole("Admin"));
+                    await roleManager.CreateAsync(new Role("Admin"));
                 }
                 if (!clientRole)
                 {
-                    await roleManager.CreateAsync(new ApplicationRole("Client"));
+                    await roleManager.CreateAsync(new Role("Client"));
                 }
             }
             catch (Exception)
@@ -64,10 +66,10 @@ namespace Licenser.Server.Infrastructure.Data
         {
             try
             {
-                var userManager = service.GetRequiredService<UserManager<ApplicationUser>>();
+                var userManager = service.GetRequiredService<UserManager<Domain.Entities.User>>();
                 var config = service.GetRequiredService<IConfiguration>();
 
-                var ownerAccount = new UserDto()
+                var ownerAccount = new User()
                 {
                     UserName = config.GetSection("ServerAccounts:Owner:UserName").Value,
                     Email = config.GetSection("ServerAccounts:Owner:Email").Value,
@@ -77,7 +79,7 @@ namespace Licenser.Server.Infrastructure.Data
                 var siteOwner = await userManager.FindByEmailAsync(ownerAccount.Email);
                 if (siteOwner == null)
                 {
-                    await userManager.CreateAsync(new ApplicationUser()
+                    await userManager.CreateAsync(new Domain.Entities.User()
                     {
                         UserName = ownerAccount.UserName,
                         Email = ownerAccount.Email,
@@ -103,10 +105,10 @@ namespace Licenser.Server.Infrastructure.Data
         {
             try
             {
-                var userManager = service.GetRequiredService<UserManager<ApplicationUser>>();
+                var userManager = service.GetRequiredService<UserManager<Domain.Entities.User>>();
                 var config = service.GetRequiredService<IConfiguration>();
 
-                var deletedUserAccount = new UserDto()
+                var deletedUserAccount = new User()
                 {
                     UserName = config.GetSection("ServerAccounts:DeletedUser:UserName").Value,
                     Email = config.GetSection("ServerAccounts:DeletedUser:Email").Value,
@@ -116,7 +118,7 @@ namespace Licenser.Server.Infrastructure.Data
                 var deletedUser = await userManager.FindByNameAsync(deletedUserAccount.UserName);
                 if (deletedUser == null)
                 {
-                    await userManager.CreateAsync(new ApplicationUser()
+                    await userManager.CreateAsync(new Domain.Entities.User()
                     {
                         UserName = deletedUserAccount.UserName,
                         Email = deletedUserAccount.Email,

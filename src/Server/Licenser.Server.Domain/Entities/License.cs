@@ -18,6 +18,6 @@ namespace Licenser.Server.Domain.Entities
         public string ProductName { get; set; }
         public DateTime? IssueDate { get; set; }
         public DateTime? ExpiryDate { get; set; }
-        public virtual ApplicationUser Owner { get; set; }
+        public virtual User Owner { get; set; }
     }
 }

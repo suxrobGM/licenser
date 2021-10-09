@@ -12,20 +12,20 @@ namespace Licenser.UnitTests
 
         public ApplicationRolesControllerTests()
         {
-            var userManagerMock = new Mock<UserManager<ApplicationUser>>();
-            var roleManagerMock = new Mock<RoleManager<ApplicationRole>>();
+            var userManagerMock = new Mock<UserManager<User>>();
+            var roleManagerMock = new Mock<RoleManager<Role>>();
             _controller = new ApplicationRolesController(userManagerMock.Object, roleManagerMock.Object);
             
             ConfigureUserManager(userManagerMock);
             ConfigureRoleManager(roleManagerMock);
         }
 
-        private void ConfigureUserManager(Mock<UserManager<ApplicationUser>> userManagerMock)
+        private void ConfigureUserManager(Mock<UserManager<User>> userManagerMock)
         {
             
         }
         
-        private void ConfigureRoleManager(Mock<RoleManager<ApplicationRole>> roleManagerMock)
+        private void ConfigureRoleManager(Mock<RoleManager<Role>> roleManagerMock)
         {
             
         }

@@ -17,17 +17,17 @@
 <MessageDialog @ref="_msgDialog" />
 <SfGrid @ref="_grid" DataSource="@_usersCollection" AllowPaging="true" AllowResizing="true" AllowSorting="true" Toolbar="@_toolbarItems">
     <GridPageSettings PageSizes="new[]{15, 25, 50}" PageSize="25"></GridPageSettings>
-    <GridEvents TValue="UserDto" OnActionComplete="GridActionComplete" OnActionBegin="GridActionBegin"></GridEvents>
+    <GridEvents TValue="User" OnActionComplete="GridActionComplete" OnActionBegin="GridActionBegin"></GridEvents>
     <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true"
                       ShowDeleteConfirmDialog="true" ShowConfirmDialog="true" Mode="EditMode.Dialog" Dialog="_dialogSettings">
         <HeaderTemplate>
-            @if (context is UserDto user)
+            @if (context is User user)
             {
                 <span>@Localizer["Record of"] @user.UserName</span>
             }
         </HeaderTemplate>
         <Template>
-            @if (context is UserDto user)
+            @if (context is User user)
             {
                 <div>
                     <div class="form-group">
@@ -76,7 +76,7 @@
             }
         </Template>
         <FooterTemplate>
-            @if (context is UserDto user)
+            @if (context is User user)
             {
                 <Alert @ref="_alert" IsDismissible="true"/>
                 <div class="float-right">
@@ -95,28 +95,28 @@
         </FooterTemplate>
     </GridEditSettings>
     <GridColumns>
-        <GridColumn Field="@nameof(UserDto.Id)" HeaderText="ID" IsPrimaryKey="true"></GridColumn>
-        <GridColumn Field="@nameof(UserDto.UserName)" HeaderText="Username" ValidationRules="@(new ValidationRules {Required = true})">
+        <GridColumn Field="@nameof(User.Id)" HeaderText="ID" IsPrimaryKey="true"></GridColumn>
+        <GridColumn Field="@nameof(User.UserName)" HeaderText="Username" ValidationRules="@(new ValidationRules {Required = true})">
             <Template>
-                @if (context is UserDto user)
+                @if (context is User user)
                 {
                     <span>@user.UserName</span>
                     <RenderUserRoles UserRoles="@user.UserRoles" />
                 }
             </Template>
         </GridColumn>
-        <GridColumn Field="@nameof(UserDto.Email)" HeaderText="Email" ValidationRules="@(new ValidationRules {Required = true, Email = true})"></GridColumn>
-        <GridColumn Field="@nameof(UserDto.RegistrationTime)" HeaderText="Registration Time"></GridColumn>
+        <GridColumn Field="@nameof(User.Email)" HeaderText="Email" ValidationRules="@(new ValidationRules {Required = true, Email = true})"></GridColumn>
+        <GridColumn Field="@nameof(User.RegistrationTime)" HeaderText="Registration Time"></GridColumn>
     </GridColumns>
 </SfGrid>
 
 @code {
     private readonly string[] _toolbarItems = { "Add", "Edit", "Delete", "Search" };
-    private readonly ObservableCollection<UserDto> _usersCollection = new();
+    private readonly ObservableCollection<User> _usersCollection = new();
     private readonly DialogSettings _dialogSettings = new();
     private bool _addNewItem;
     private bool _assignClientRole;
-    private SfGrid<UserDto> _grid;
+    private SfGrid<User> _grid;
     private Alert _alert;
     private MessageDialog _msgDialog;
     private AuthenticationState _authState;
@@ -143,7 +143,7 @@
         _usersCollection.AddRange(getUsersResponse.Data);
     }
 
-    public async Task Save(UserDto user, bool addNewItem = false)
+    public async Task Save(User user, bool addNewItem = false)
     {
         ApiResponse apiResult;
 
@@ -200,7 +200,7 @@
         return _grid.CloseEdit(); // Cancel editing action
     }
 
-    private void GridActionBegin(ActionEventArgs<UserDto> args)
+    private void GridActionBegin(ActionEventArgs<User> args)
     {
         var userRecord = args.Data;
 
@@ -217,7 +217,7 @@
         }
     }
 
-    private async void GridActionComplete(ActionEventArgs<UserDto> args)
+    private async void GridActionComplete(ActionEventArgs<User> args)
     {
         var userRecord = args.Data;
 

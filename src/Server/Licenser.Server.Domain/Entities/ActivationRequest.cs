@@ -17,6 +17,6 @@ namespace Licenser.Server.Domain.Entities
         public DateTime Timestamp { get; set; }
 
         public string RequestedClientId { get; set; }
-        public virtual ApplicationUser RequestedClient { get; set; }
+        public virtual User RequestedClient { get; set; }
     }
 }

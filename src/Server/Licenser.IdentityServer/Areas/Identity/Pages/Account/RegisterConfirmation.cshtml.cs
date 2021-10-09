@@ -13,10 +13,10 @@ namespace Licenser.IdentityServer.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IEmailSenderService _senderService;
 
-        public RegisterConfirmationModel(UserManager<ApplicationUser> userManager, IEmailSenderService senderService)
+        public RegisterConfirmationModel(UserManager<User> userManager, IEmailSenderService senderService)
         {
             _userManager = userManager;
             _senderService = senderService;

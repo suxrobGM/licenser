@@ -21,15 +21,15 @@ namespace Licenser.IdentityServer.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSenderService _emailSenderService;
         private readonly IGoogleCaptchaService _googleCaptcha;
 
         public RegisterModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             GoogleCaptchaOptions captchaOptions,
             ILogger<RegisterModel> logger,
             IEmailSenderService emailSenderService,
@@ -95,7 +95,7 @@ namespace Licenser.IdentityServer.Areas.Identity.Pages.Account
             if (!ModelState.IsValid) 
                 return Page();
 
-            var user = new ApplicationUser
+            var user = new User
             {
                 UserName = Input.UserName, 
                 Email = Input.Email

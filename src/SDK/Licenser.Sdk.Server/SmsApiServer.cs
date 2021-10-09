@@ -28,33 +28,33 @@ namespace Licenser.Sdk.Server
         #region License methods
 
         /// <inheritdoc/>
-        public async Task<ApiResponse<LicenseDto>> GetLicenseAsync(string id)
+        public async Task<ApiResponse<License>> GetLicenseAsync(string id)
         {
-            var apiResponse = await GetRequestAsync<LicenseDto>($"licenses/{id}");
+            var apiResponse = await GetRequestAsync<License>($"licenses/{id}");
             return apiResponse;
         }
 
         /// <inheritdoc/>
-        public async Task<ApiResponse<IEnumerable<LicenseDto>>> GetLicensesAsync()
+        public async Task<ApiResponse<IEnumerable<License>>> GetLicensesAsync()
         {
-            var apiResponse = await GetRequestAsync<IEnumerable<LicenseDto>>("licenses");
+            var apiResponse = await GetRequestAsync<IEnumerable<License>>("licenses");
             return apiResponse;
         }
 
         /// <inheritdoc/>
-        public Task<ApiResponse> AddLicenseAsync(LicenseDto license)
+        public Task<ApiResponse> AddLicenseAsync(License license)
         {
             return PostRequestAsync("licenses", license);
         }
 
         /// <inheritdoc/>
-        public Task<ApiResponse> UpdateLicenseAsync(LicenseDto license)
+        public Task<ApiResponse> UpdateLicenseAsync(License license)
         {
             return PutRequestAsync($"licenses/{license.Id}", license);
         }
 
         /// <inheritdoc/>
-        public Task<ApiResponse> DeleteLicenseAsync(LicenseDto license)
+        public Task<ApiResponse> DeleteLicenseAsync(License license)
         {
             return DeleteRequestAsync($"licenses/{license.Id}");
         }
@@ -64,14 +64,14 @@ namespace Licenser.Sdk.Server
         #region ActivationRequest methods
 
         /// <inheritdoc/>
-        public async Task<ApiResponse<IEnumerable<ActivationRequestDto>>> GetActivationRequestsAsync()
+        public async Task<ApiResponse<IEnumerable<ActivationRequest>>> GetActivationRequestsAsync()
         {
-            var apiResponse = await GetRequestAsync<IEnumerable<ActivationRequestDto>>("licenses/activationRequests");
+            var apiResponse = await GetRequestAsync<IEnumerable<ActivationRequest>>("licenses/activationRequests");
             return apiResponse;
         }
 
         /// <inheritdoc/>
-        public Task<ApiResponse> DeleteActivationRequestAsync(ActivationRequestDto activationRequest)
+        public Task<ApiResponse> DeleteActivationRequestAsync(ActivationRequest activationRequest)
         {
             return DeleteRequestAsync($"licenses/activationRequest/{activationRequest.Id}");
         }
@@ -81,33 +81,33 @@ namespace Licenser.Sdk.Server
         #region User methods
 
         /// <inheritdoc/>
-        public async Task<ApiResponse<IEnumerable<UserDto>>> GetUsersAsync()
+        public async Task<ApiResponse<IEnumerable<User>>> GetUsersAsync()
         {
-            var apiResponse = await GetRequestAsync<IEnumerable<UserDto>>("users");
+            var apiResponse = await GetRequestAsync<IEnumerable<User>>("users");
             return apiResponse;
         }
 
         /// <inheritdoc/>
-        public async Task<ApiResponse<IEnumerable<UserDto>>> GetUsersInRoleAsync(string roleName)
+        public async Task<ApiResponse<IEnumerable<User>>> GetUsersInRoleAsync(string roleName)
         {
-            var apiResponse = await GetRequestAsync<IEnumerable<UserDto>>($"users/inRole/{roleName}");
+            var apiResponse = await GetRequestAsync<IEnumerable<User>>($"users/inRole/{roleName}");
             return apiResponse;
         }
 
         /// <inheritdoc/>
-        public Task<ApiResponse> AddUserAsync(UserDto user)
+        public Task<ApiResponse> AddUserAsync(User user)
         {
             return PostRequestAsync("users", user);
         }
 
         /// <inheritdoc/>
-        public Task<ApiResponse> UpdateUserAsync(UserDto user)
+        public Task<ApiResponse> UpdateUserAsync(User user)
         {
             return PutRequestAsync($"users/{user.Id}", user);
         }
 
         /// <inheritdoc/>
-        public Task<ApiResponse> DeleteUserAsync(UserDto user)
+        public Task<ApiResponse> DeleteUserAsync(User user)
         {
             return DeleteRequestAsync($"users/{user.Id}");
         }
@@ -117,16 +117,16 @@ namespace Licenser.Sdk.Server
         #region ApplicationRole methods
 
         /// <inheritdoc/>
-        public async Task<ApiResponse<IEnumerable<RoleDto>>> GetRolesAsync()
+        public async Task<ApiResponse<IEnumerable<Role>>> GetRolesAsync()
         {
-            var apiResponse = await GetRequestAsync<IEnumerable<RoleDto>>("roles");
+            var apiResponse = await GetRequestAsync<IEnumerable<Role>>("roles");
             return apiResponse;
         }
 
         /// <inheritdoc/>
-        public Task<ApiResponse> UpdateRoleAsync(RoleDto roleDto)
+        public Task<ApiResponse> UpdateRoleAsync(Role role)
         {
-            return PutRequestAsync($"roles/{roleDto.Id}", roleDto);
+            return PutRequestAsync($"roles/{role.Id}", role);
         }
 
         /// <inheritdoc/>

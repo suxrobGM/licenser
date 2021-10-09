@@ -44,7 +44,7 @@ namespace Licenser.WebApi
                     .UseLazyLoadingProxies());
 
             // Identity Core
-            services.AddIdentityCore<ApplicationUser>(options =>
+            services.AddIdentityCore<User>(options =>
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireUppercase = false;
@@ -52,7 +52,7 @@ namespace Licenser.WebApi
                 options.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789_.-";
                 options.User.RequireUniqueEmail = true;
             })
-            .AddRoles<ApplicationRole>()
+            .AddRoles<Role>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // API Controllers

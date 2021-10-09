@@ -11,7 +11,7 @@ using Licenser.Server.Domain.Entities;
 
 namespace Licenser.Server.Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>, IPersistedGrantDbContext
+    public class ApplicationDbContext : IdentityDbContext<User, Role, string>, IPersistedGrantDbContext
     {
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
@@ -45,7 +45,7 @@ namespace Licenser.Server.Infrastructure.Data
             base.OnModelCreating(builder);
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
 
-            builder.Entity<ApplicationUser>(entity =>
+            builder.Entity<User>(entity =>
             {
                 entity.HasMany(m => m.UserLicenses)
                     .WithOne(m => m.Owner)

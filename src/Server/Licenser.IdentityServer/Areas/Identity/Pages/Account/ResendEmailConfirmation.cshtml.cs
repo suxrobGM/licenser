@@ -15,10 +15,10 @@ namespace Licenser.IdentityServer.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ResendEmailConfirmationModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IEmailSenderService _emailSenderService;
 
-        public ResendEmailConfirmationModel(UserManager<ApplicationUser> userManager, IEmailSenderService emailSenderService)
+        public ResendEmailConfirmationModel(UserManager<User> userManager, IEmailSenderService emailSenderService)
         {
             _userManager = userManager;
             _emailSenderService = emailSenderService;

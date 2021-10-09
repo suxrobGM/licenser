@@ -15,10 +15,10 @@ namespace Licenser.IdentityServer.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ForgotPasswordModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IEmailSenderService _emailSenderService;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSenderService emailSenderService)
+        public ForgotPasswordModel(UserManager<User> userManager, IEmailSenderService emailSenderService)
         {
             _userManager = userManager;
             _emailSenderService = emailSenderService;

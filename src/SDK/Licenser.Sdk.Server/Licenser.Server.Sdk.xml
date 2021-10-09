@@ -17,21 +17,21 @@
             </summary>
             <returns>Licenses</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.ISmsApiServer.AddLicenseAsync(Licenser.Shared.Models.LicenseDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.AddLicenseAsync(Licenser.Shared.Models.License)">
             <summary>
             Add new license item to API server
             </summary>
             <param name="license">License DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.ISmsApiServer.UpdateLicenseAsync(Licenser.Shared.Models.LicenseDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.UpdateLicenseAsync(Licenser.Shared.Models.License)">
             <summary>
             Update existing license item to API server
             </summary>
             <param name="license">License DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.ISmsApiServer.DeleteLicenseAsync(Licenser.Shared.Models.LicenseDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.DeleteLicenseAsync(Licenser.Shared.Models.License)">
             <summary>
             Delete license item from API server
             </summary>
@@ -44,7 +44,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.ISmsApiServer.DeleteActivationRequestAsync(Licenser.Shared.Models.ActivationRequestDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.DeleteActivationRequestAsync(Licenser.Shared.Models.ActivationRequest)">
             <summary>
             Delete activation request.
             </summary>
@@ -63,21 +63,21 @@
             </summary>
             <returns>Users</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.ISmsApiServer.AddUserAsync(Licenser.Shared.Models.UserDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.AddUserAsync(Licenser.Shared.Models.User)">
             <summary>
             Add new user to API server
             </summary>
             <param name="user">User DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.ISmsApiServer.UpdateUserAsync(Licenser.Shared.Models.UserDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.UpdateUserAsync(Licenser.Shared.Models.User)">
             <summary>
             Update existing user to API server
             </summary>
             <param name="user">User DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.ISmsApiServer.DeleteUserAsync(Licenser.Shared.Models.UserDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.DeleteUserAsync(Licenser.Shared.Models.User)">
             <summary>
             Delete user from API server
             </summary>
@@ -90,11 +90,11 @@
             </summary>
             <returns>Roles</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.ISmsApiServer.UpdateRoleAsync(Licenser.Shared.Models.RoleDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.UpdateRoleAsync(Licenser.Shared.Models.Role)">
             <summary>
             Update existing role to API server
             </summary>
-            <param name="roleDto">Role DTO type</param>
+            <param name="role">Role DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
         <member name="M:Licenser.Sdk.Server.ISmsApiServer.AssignRoleAsync(System.String,System.String)">
@@ -138,19 +138,19 @@
         <member name="M:Licenser.Sdk.Server.SmsApiServer.GetLicensesAsync">
             <inheritdoc/>
         </member>
-        <member name="M:Licenser.Sdk.Server.SmsApiServer.AddLicenseAsync(Licenser.Shared.Models.LicenseDto)">
+        <member name="M:Licenser.Sdk.Server.SmsApiServer.AddLicenseAsync(Licenser.Shared.Models.License)">
             <inheritdoc/>
         </member>
-        <member name="M:Licenser.Sdk.Server.SmsApiServer.UpdateLicenseAsync(Licenser.Shared.Models.LicenseDto)">
+        <member name="M:Licenser.Sdk.Server.SmsApiServer.UpdateLicenseAsync(Licenser.Shared.Models.License)">
             <inheritdoc/>
         </member>
-        <member name="M:Licenser.Sdk.Server.SmsApiServer.DeleteLicenseAsync(Licenser.Shared.Models.LicenseDto)">
+        <member name="M:Licenser.Sdk.Server.SmsApiServer.DeleteLicenseAsync(Licenser.Shared.Models.License)">
             <inheritdoc/>
         </member>
         <member name="M:Licenser.Sdk.Server.SmsApiServer.GetActivationRequestsAsync">
             <inheritdoc/>
         </member>
-        <member name="M:Licenser.Sdk.Server.SmsApiServer.DeleteActivationRequestAsync(Licenser.Shared.Models.ActivationRequestDto)">
+        <member name="M:Licenser.Sdk.Server.SmsApiServer.DeleteActivationRequestAsync(Licenser.Shared.Models.ActivationRequest)">
             <inheritdoc/>
         </member>
         <member name="M:Licenser.Sdk.Server.SmsApiServer.GetUsersAsync">
@@ -159,19 +159,19 @@
         <member name="M:Licenser.Sdk.Server.SmsApiServer.GetUsersInRoleAsync(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Licenser.Sdk.Server.SmsApiServer.AddUserAsync(Licenser.Shared.Models.UserDto)">
+        <member name="M:Licenser.Sdk.Server.SmsApiServer.AddUserAsync(Licenser.Shared.Models.User)">
             <inheritdoc/>
         </member>
-        <member name="M:Licenser.Sdk.Server.SmsApiServer.UpdateUserAsync(Licenser.Shared.Models.UserDto)">
+        <member name="M:Licenser.Sdk.Server.SmsApiServer.UpdateUserAsync(Licenser.Shared.Models.User)">
             <inheritdoc/>
         </member>
-        <member name="M:Licenser.Sdk.Server.SmsApiServer.DeleteUserAsync(Licenser.Shared.Models.UserDto)">
+        <member name="M:Licenser.Sdk.Server.SmsApiServer.DeleteUserAsync(Licenser.Shared.Models.User)">
             <inheritdoc/>
         </member>
         <member name="M:Licenser.Sdk.Server.SmsApiServer.GetRolesAsync">
             <inheritdoc/>
         </member>
-        <member name="M:Licenser.Sdk.Server.SmsApiServer.UpdateRoleAsync(Licenser.Shared.Models.RoleDto)">
+        <member name="M:Licenser.Sdk.Server.SmsApiServer.UpdateRoleAsync(Licenser.Shared.Models.Role)">
             <inheritdoc/>
         </member>
         <member name="M:Licenser.Sdk.Server.SmsApiServer.AssignRoleAsync(System.String,System.String)">

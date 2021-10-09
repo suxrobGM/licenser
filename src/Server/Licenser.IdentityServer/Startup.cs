@@ -40,7 +40,7 @@ namespace Licenser.IdentityServer
                     .UseLazyLoadingProxies());
 
             // Identity
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options => 
+            services.AddIdentity<User, Role>(options => 
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireUppercase = false;
@@ -54,7 +54,7 @@ namespace Licenser.IdentityServer
 
             // Identity Server 4
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
+                .AddApiAuthorization<User, ApplicationDbContext>(options =>
                 {
                     options.Clients = new ClientCollection(Config.GetClients(Configuration));
                     options.ApiResources = new ApiResourceCollection(Config.GetApiResources(Configuration));

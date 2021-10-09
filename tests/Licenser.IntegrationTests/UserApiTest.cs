@@ -11,7 +11,7 @@ namespace Licenser.IntegrationTests
         [Fact]
         public async void TestUserRegister()
         {
-            var user = new UserDto()
+            var user = new User()
             {
                 UserName = "TestClient",
                 Email = "TestEmail@mail.ru",
@@ -37,7 +37,7 @@ namespace Licenser.IntegrationTests
                 await AuthorizeAsAdmin(); // get access token before requesting
             }
 
-            var user = new UserDto()
+            var user = new User()
             {
                 UserName = "TestClient"
             };

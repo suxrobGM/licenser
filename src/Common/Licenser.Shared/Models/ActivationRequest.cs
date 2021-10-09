@@ -2,9 +2,9 @@
 
 namespace Licenser.Shared.Models
 {
-    public class ActivationRequestDto
+    public class ActivationRequest
     {
-        public ActivationRequestDto()
+        public ActivationRequest()
         {
             Id = Guid.NewGuid().ToString();
             Timestamp = DateTime.Now;

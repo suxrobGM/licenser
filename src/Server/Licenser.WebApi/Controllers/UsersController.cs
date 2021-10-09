@@ -14,6 +14,8 @@ using Licenser.WebApi.Extensions;
 using Licenser.Server.Domain.Entities;
 using Licenser.Server.Domain.Repositories.Abstractions;
 using Licenser.Shared.Models;
+using Role = Licenser.Shared.Models.Role;
+using User = Licenser.Shared.Models.User;
 
 namespace Licenser.WebApi.Controllers
 {
@@ -25,7 +27,7 @@ namespace Licenser.WebApi.Controllers
     {
         #region Fields
 
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<Server.Domain.Entities.User> _userManager;
         private readonly ILicenseRepository _licenseRepository;
         private readonly IActivationRequestRepository _activationRequestRepository;
         private readonly IConfiguration _configuration;
@@ -34,7 +36,7 @@ namespace Licenser.WebApi.Controllers
 
         #region Constructor
 
-        public UsersController(UserManager<ApplicationUser> userManager,
+        public UsersController(UserManager<Server.Domain.Entities.User> userManager,
             ILicenseRepository licenseRepository,
             IActivationRequestRepository activationRequestRepository,
             IConfiguration configuration)
@@ -62,10 +64,10 @@ namespace Licenser.WebApi.Controllers
         /// <returns>List of User DTO schemes</returns>
         /// <response code="200">Successful API response</response>
         [HttpGet]
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<UserDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<User>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsers()
         {
-            var usersDtoList = new List<UserDto>();
+            var usersDtoList = new List<User>();
             var usersDb = await _userManager.Users.ToListAsync();
 
             foreach (var userEntity in usersDb)
@@ -74,7 +76,7 @@ namespace Licenser.WebApi.Controllers
                 usersDtoList.Add(userDto);
             }
 
-            return Ok(new ApiResponse<IEnumerable<UserDto>>()
+            return Ok(new ApiResponse<IEnumerable<User>>()
             {
                 Status = ApiResponseStatus.Success,
                 Message = "Returned list of users",
@@ -97,15 +99,15 @@ namespace Licenser.WebApi.Controllers
         /// <response code="200">Successful API response</response>
         /// <response code="400">Bad request API response which indicates user could not found with specified UserID</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<User>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetUserById(string id)
         {
             var userEntity = await _userManager.FindByIdAsync(id);
 
             if (userEntity == null)
             {
-                return BadRequest(new ApiResponse<UserDto>()
+                return BadRequest(new ApiResponse<User>()
                 {
                     Status = ApiResponseStatus.Error,
                     Message = $"Could not found user with ID {id}",
@@ -115,7 +117,7 @@ namespace Licenser.WebApi.Controllers
             
             var userDto = await ConvertToUserDtoAsync(userEntity);
 
-            return Ok(new ApiResponse<UserDto>()
+            return Ok(new ApiResponse<User>()
             {
                 Status = ApiResponseStatus.Success,
                 Message = "Returned user data",
@@ -137,18 +139,18 @@ namespace Licenser.WebApi.Controllers
         /// <returns>User DTO scheme</returns>
         /// <response code="200">Successful API response</response>
         [HttpGet("inRole/{roleName}")]
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<RoleDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<Role>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsersInRole(string roleName)
         {
             var users = await _userManager.GetUsersInRoleAsync(roleName);
-            var usersDtoList = new List<UserDto>();
+            var usersDtoList = new List<User>();
             foreach (var userEntity in users)
             {
                 var userDto = await ConvertToUserDtoAsync(userEntity);
                 usersDtoList.Add(userDto);
             }
 
-            return Ok(new ApiResponse<IEnumerable<UserDto>>()
+            return Ok(new ApiResponse<IEnumerable<User>>()
             {
                 Status = ApiResponseStatus.Success,
                 Message = $"Returned list of users who have {roleName} role",
@@ -182,7 +184,7 @@ namespace Licenser.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> AddUser([FromBody] UserDto userDto)  
+        public async Task<IActionResult> AddUser([FromBody] User userDto)  
         {  
             var userExists = await _userManager.FindUserAsync(userDto);
             if (userExists != null)
@@ -193,7 +195,7 @@ namespace Licenser.WebApi.Controllers
                         Message = "User already exists!"
                     });  
   
-            var user = new ApplicationUser()  
+            var user = new Server.Domain.Entities.User()  
             {  
                 Id = userDto.Id,
                 Email = userDto.Email,
@@ -251,7 +253,7 @@ namespace Licenser.WebApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateUser(string id, [FromBody] UserDto userDto)
+        public async Task<IActionResult> UpdateUser(string id, [FromBody] User user)
         {
             var userEntity = await _userManager.FindByIdAsync(id);
 
@@ -264,16 +266,16 @@ namespace Licenser.WebApi.Controllers
                 });
             }
 
-            if (!string.Equals(userEntity.Email.Trim(), userDto.Email.Trim(), 
+            if (!string.Equals(userEntity.Email.Trim(), user.Email.Trim(), 
                 StringComparison.CurrentCultureIgnoreCase))
             {
-                await _userManager.SetEmailAsync(userEntity, userDto.Email);
+                await _userManager.SetEmailAsync(userEntity, user.Email);
             }
             
-            if (!string.Equals(userEntity.UserName.Trim(), userDto.UserName.Trim(), 
+            if (!string.Equals(userEntity.UserName.Trim(), user.UserName.Trim(), 
                 StringComparison.CurrentCultureIgnoreCase))
             {
-                await _userManager.SetUserNameAsync(userEntity, userDto.UserName);
+                await _userManager.SetUserNameAsync(userEntity, user.UserName);
             }
 
             return Ok(new ApiResponse()
@@ -343,14 +345,14 @@ namespace Licenser.WebApi.Controllers
         #region Private methods
 
         /// <summary>
-        /// Converts ApplicationUser to UserDto class
+        /// Converts User to User class
         /// </summary>
         /// <param name="userEntity">User entity object</param>
         /// <returns>User DTO object</returns>
-        private async Task<UserDto> ConvertToUserDtoAsync(ApplicationUser userEntity)
+        private async Task<User> ConvertToUserDtoAsync(Server.Domain.Entities.User userEntity)
         {
             var userRoles = (await _userManager.GetRolesAsync(userEntity)).ToArray();
-            var userDto = new UserDto()
+            var userDto = new User()
             {
                 Id = userEntity.Id,
                 UserName = userEntity.UserName,

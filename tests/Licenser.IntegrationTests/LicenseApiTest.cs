@@ -17,7 +17,7 @@ namespace Licenser.IntegrationTests
                 await AuthorizeAsAdmin(); // get access token before requesting
             }
 
-            var license = new LicenseDto()
+            var license = new License()
             {
                 OwnerId = "d5bbb4da-c304-4910-b237-d36b46803af5", // TestClient's ID
                 MachineId = "PGPTV028J85093.BFEBFBFF000906E9",
@@ -42,7 +42,7 @@ namespace Licenser.IntegrationTests
                 await AuthorizeAsAdmin(); // get access token before requesting
             }
 
-            var license = new LicenseDto()
+            var license = new License()
             {
                 OwnerId = "d5bbb4da-c304-4910-b237-d36b46803af5", // TestClient's ID
                 MachineId = "PGPTV028J85093.BFEBFBFF000906E9"
@@ -72,7 +72,7 @@ namespace Licenser.IntegrationTests
 
             var response = await client.GetAsync("license");
             var responseData = await response.Content.ReadAsStringAsync();
-            var apiResponse = JsonSerializer.Deserialize<ApiResponse<IEnumerable<LicenseDto>>>(responseData, serializerOptions);
+            var apiResponse = JsonSerializer.Deserialize<ApiResponse<IEnumerable<License>>>(responseData, serializerOptions);
             
             Assert.NotNull(apiResponse);
             Assert.True(apiResponse.Status == ApiResponseStatus.Success);
