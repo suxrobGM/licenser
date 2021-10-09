@@ -7,7 +7,7 @@ using Licenser.Shared.Models;
 
 namespace Licenser.IntegrationTests
 {
-    public class TestLicenseApi : TestAuthentication
+    public class LicenseApiAuthenticationApiTest : AuthenticationApiTest
     {
         [Fact]
         public async void TestAddLicense()

@@ -10,12 +10,12 @@ using Licenser.Shared.Models;
 
 namespace Licenser.IntegrationTests
 {
-    public class TestAuthentication
+    public class AuthenticationApiTest
     {
         protected readonly HttpClient client;
         protected readonly JsonSerializerOptions serializerOptions;
 
-        public TestAuthentication()
+        public AuthenticationApiTest()
         {
             client = new HttpClient()
             {

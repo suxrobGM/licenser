@@ -4,12 +4,12 @@ using Xunit;
 
 namespace Licenser.IntegrationTests
 {
-    public class TestClientSdk
+    public class ClientSdkTest
     {
         private readonly SmsApiClientOptions _apiClientOptions;
         private readonly UserAdvancedCredentials _userCredentials;
 
-        public TestClientSdk()
+        public ClientSdkTest()
         {
             _apiClientOptions = new SmsApiClientOptions()
             {
