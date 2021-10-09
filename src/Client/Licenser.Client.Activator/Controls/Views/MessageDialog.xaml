@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Licenser.Client.Activator.Controls.MessageDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="200" 
+             d:DesignWidth="400"
+             Name="thisControl">
+    <StackPanel HorizontalAlignment="Center"
+                DataContext="{Binding ElementName=thisControl}"
+                Visibility="{Binding ShowDialog,
+                            Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock Text="{Binding Caption}" 
+                       TextAlignment="Center"
+                       FontSize="{Binding CaptionFontSize}"
+                       FontWeight="Bold"
+                       TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding MessageText}" 
+                       TextAlignment="Center"
+                       FontSize="{Binding MessageTextFontSize}"
+                       TextWrapping="Wrap"/>
+
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Style="{StaticResource RoundedCornerButton}"
+                        Command="{Binding OkButtonCommand}"
+                        Visibility="{Binding OkButtonVisible,
+                            Converter={StaticResource BoolToVisibilityConverter}}"
+                        Content="OK" 
+                        Width="{Binding OkButtonWidth}" 
+                        Height="{Binding OkButtonHeight}" 
+                        Margin="0,10,0,0" 
+                        Background="#FF063D5D" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="{Binding OkButtonFontSize}"/>
+                <Button Style="{StaticResource RoundedCornerButton}" 
+                        Command="{Binding CancelButtonCommand}"
+                        Visibility="{Binding CancelButtonVisible,
+                            Converter={StaticResource BoolToVisibilityConverter}}"
+                        Content="Cancel"
+                        Width="{Binding CancelButtonWidth}" 
+                        Height="{Binding CancelButtonHeight}" 
+                        Margin="5,10,0,0" 
+                        Background="#FF063D5D" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="{Binding CancelButtonFontSize}"/>
+            </WrapPanel>
+    </StackPanel>
+</UserControl>

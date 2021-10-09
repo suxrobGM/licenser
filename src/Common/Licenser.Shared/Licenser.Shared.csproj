@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Company>Smart Meal Service</Company>
+    <Authors>Sukhrob Ilyosbekov</Authors>
+    <Description>Shared data transfer models, exceptions, types for both SMS API Client and Server SDK</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>SmartMealService, SMS, SDK, Shared</PackageTags>
+    <Version>2.1.0</Version>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <DocumentationFile>.\Sms.Licensing.Shared.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <DocumentationFile>.\Sms.Licensing.Shared.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>

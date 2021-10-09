@@ -1,0 +1,28 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Logout";
+}
+
+<div>
+    <h1>Logout</h1>
+
+    @if (User.Identity != null && !User.Identity.IsAuthenticated)
+    {
+        <div>
+            <p>You are not logged yet.</p>
+        </div>
+    }
+    else
+    {
+        <div>
+            <p>Would you like to logout from Account?</p>
+        </div>
+
+        <form asp-route-redirectUrl="@Model.ReturnUrl" method="post">
+            <div class="form-group">
+                <button class="btn btn-primary">Yes</button>
+            </div>
+        </form>
+    }
+</div>

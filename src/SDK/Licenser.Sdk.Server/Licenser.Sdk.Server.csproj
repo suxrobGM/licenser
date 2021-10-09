@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <DocumentationFile>.\Licenser.Server.Sdk.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Licenser.Sdk.Client\Licenser.Sdk.Client.csproj" />
+  </ItemGroup>
+
+</Project>

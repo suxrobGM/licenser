@@ -1,0 +1,49 @@
+﻿@page "/Manage/UserRoles/List/{roleName}"
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+
+@using Licenser.Sdk.Server.Abstractions
+@using Licenser.Shared.Models
+@using System.Collections.ObjectModel
+@using Licenser.Domain.Extensions
+
+@inject IStringLocalizer<Index> Localizer
+@inject ISmsApiServer ApiServer
+
+<h1>@Localizer["Users in role"] @RoleName</h1>
+
+<MessageDialog @ref="_msgDialog" />
+<SfGrid @ref="_grid" DataSource="@_usersCollection" AllowPaging="true" AllowResizing="true" AllowSorting="true" Toolbar="@_toolbarItems">
+    <GridPageSettings PageSizes="new[]{15, 25, 50}" PageSize="25"></GridPageSettings>
+    <GridColumns>
+        <GridColumn Field="@nameof(UserDto.Id)" HeaderText="ID" IsPrimaryKey="true"></GridColumn>
+        <GridColumn Field="@nameof(UserDto.UserName)" HeaderText="Username" ValidationRules="@(new ValidationRules {Required = true})"></GridColumn>
+        <GridColumn Field="@nameof(UserDto.Email)" HeaderText="Email" ValidationRules="@(new ValidationRules{ Required = true, Email = true})"></GridColumn>
+        <GridColumn Field="@nameof(UserDto.RegistrationTime)" HeaderText="Registration Time"></GridColumn>
+    </GridColumns>
+</SfGrid>
+
+<div class="mt-3">
+    <a href="/Manage/UserRoles/Edit">@Localizer["Manage user role"]</a>
+</div>
+
+@code {
+    private readonly string[] _toolbarItems = { "Search" };
+    private readonly ObservableCollection<UserDto> _usersCollection = new();
+    private SfGrid<UserDto> _grid;
+    private MessageDialog _msgDialog;
+
+    [Parameter] public string RoleName { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        var getUsersInRoleResponse = await ApiServer.GetUsersInRoleAsync(RoleName);
+
+        if (_msgDialog.ShowIfHasApiErrors(getUsersInRoleResponse))
+            return;
+
+        _usersCollection.AddRange(getUsersInRoleResponse.Data);
+    }
+}

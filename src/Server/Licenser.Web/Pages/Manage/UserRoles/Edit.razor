@@ -1,0 +1,136 @@
+﻿@page "/Manage/UserRoles/Edit"
+@attribute [Authorize(Roles = "SuperAdmin, Admin")]
+
+@using System.Collections.ObjectModel
+@using Licenser.Domain.Extensions
+@using Licenser.Sdk.Server.Abstractions
+@using Licenser.Shared.Models
+
+@inject IStringLocalizer<Index> Localizer
+@inject ISmsApiServer ApiServer
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h1>@Localizer["Assign/Remove role"]</h1>
+<hr />
+
+<MessageDialog @ref="_msgDialog" />
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-5">
+        <EditForm EditContext="_editContext" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="UserName">@Localizer["Username"]</label>
+                <SfComboBox ID="UserName" TItem="UserDto" TValue="string" @bind-Value="UserName" DataSource="@_usersCollection">
+                    <ComboBoxFieldSettings Value="UserName"></ComboBoxFieldSettings>
+                </SfComboBox>
+            </div>
+            <div class="form-group">
+                <label for="UserRoles">@Localizer["User Roles"]</label>
+                <SfMultiSelect ID="UserRoles" TItem="RoleDto" TValue="string[]" @bind-Value="@Roles" DataSource="@_rolesCollection" Enabled="_canChangeRole">
+                    <MultiSelectFieldSettings Value="Name"></MultiSelectFieldSettings>
+                </SfMultiSelect>
+            </div>
+            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+        </EditForm>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="/Manage/Users">@Localizer["Back to List"]</a>
+</div>
+
+@code {
+    private readonly ObservableCollection<UserDto> _usersCollection = new();
+    private readonly ObservableCollection<RoleDto> _rolesCollection = new();
+    private bool _canChangeRole; // Determine if user has Admin role then can not change others Admin role
+    private string _userName;
+    private AuthenticationState _authState;
+    private EditContext _editContext;
+    private MessageDialog _msgDialog;
+
+    public string UserName
+    {
+        get => _userName;
+        set
+        {
+            _userName = value;
+            Roles = _usersCollection.First(i => i.UserName == _userName).UserRoles;
+
+            if (!_authState.User.IsInRole("SuperAdmin") &&
+                (Roles.Contains("SuperAdmin") ||
+                 Roles.Contains("Admin")))
+            {
+                _canChangeRole = false;
+            }
+            else
+            {
+                _canChangeRole = true;
+            }
+
+            StateHasChanged();
+        }
+    }
+
+    public string[] Roles { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _editContext = new EditContext(new { UserName, Roles });
+        _authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _canChangeRole = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        var getRolesResponse = await ApiServer.GetRolesAsync();
+
+        if (_msgDialog.ShowIfHasApiErrors(getRolesResponse))
+            return;
+
+        var getUsersResponse = await ApiServer.GetUsersAsync();
+
+        if (_msgDialog.ShowIfHasApiErrors(getUsersResponse))
+            return;
+
+        // Only SuperAdmin can assign Admin or SuperAdmin roles
+        var roles = _authState.User.IsInRole("SuperAdmin") ? getRolesResponse.Data :
+            getRolesResponse.Data.Where(i => i.Name != "SuperAdmin" && i.Name != "Admin"); // Exclude SuperAdmin and Admin roles
+
+        _usersCollection.AddRange(getUsersResponse.Data);
+        _rolesCollection.AddRange(roles);
+    }
+
+    private async void HandleValidSubmit()
+    {
+        if (string.IsNullOrEmpty(UserName))
+        {
+            _msgDialog.Show("Please select user");
+            return;
+        }
+
+        var user = _usersCollection.First(i => i.UserName == UserName);
+        var apiResult = await ApiServer.RemoveAllRolesFromUserAsync(user.Id);
+
+        if (_msgDialog.ShowIfHasApiErrors(apiResult))
+            return;
+
+        foreach (var role in Roles)
+        {
+            if (role.Equals("SuperAdmin"))
+                continue;
+
+            apiResult = await ApiServer.AssignRoleAsync(role, user.Id);
+
+            if (_msgDialog.ShowIfHasApiErrors(apiResult))
+                return;
+        }
+
+        NavManager.NavigateTo("/Manage/Users");
+    }
+}
