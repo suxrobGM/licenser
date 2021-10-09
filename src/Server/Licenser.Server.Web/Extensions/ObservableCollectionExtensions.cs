@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Licenser.Server.Domain.Extensions
+namespace Licenser.Server.Web.Extensions
 {
     public static class ObservableCollectionExtensions
     {
