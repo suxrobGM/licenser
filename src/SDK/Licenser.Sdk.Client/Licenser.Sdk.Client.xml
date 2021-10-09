@@ -4,24 +4,24 @@
         <name>Licenser.Sdk.Client</name>
     </assembly>
     <members>
-        <member name="T:Licenser.Sdk.Client.Abstractions.ISmsApiAuthClient">
+        <member name="T:Licenser.Sdk.Client.ISmsApiAuthClient">
             <summary>
             SMS Api authentication client interface
             </summary>
         </member>
-        <member name="M:Licenser.Sdk.Client.Abstractions.ISmsApiAuthClient.IsAuthenticated">
+        <member name="M:Licenser.Sdk.Client.ISmsApiAuthClient.IsAuthenticated">
             <summary>
             Checks client already authorized with JWT
             </summary>
             <returns>True if client authorized</returns>
         </member>
-        <member name="M:Licenser.Sdk.Client.Abstractions.ISmsApiAuthClient.SetAccessToken(System.String)">
+        <member name="M:Licenser.Sdk.Client.ISmsApiAuthClient.SetAccessToken(System.String)">
             <summary>
             Sets an authorization header with a bearer token.
             </summary>
             <param name="accessToken"></param>
         </member>
-        <member name="M:Licenser.Sdk.Client.Abstractions.ISmsApiAuthClient.AuthenticatePasswordAsync(Licenser.Shared.Models.UserAdvancedCredentials)">
+        <member name="M:Licenser.Sdk.Client.ISmsApiAuthClient.AuthenticatePasswordAsync(Licenser.Shared.Models.UserAdvancedCredentials)">
             <summary>
             Authenticates user using its username and password (grant type is 'password').
             </summary>
@@ -29,32 +29,32 @@
             <exception cref="T:System.ArgumentNullException">Throws if argument of userCredentials is null</exception>
             <returns>Get access token</returns>
         </member>
-        <member name="M:Licenser.Sdk.Client.Abstractions.ISmsApiAuthClient.RefreshTokenAsync(System.String)">
+        <member name="M:Licenser.Sdk.Client.ISmsApiAuthClient.RefreshTokenAsync(System.String)">
             <summary>
             Renew access token after expired lifetime using refresh token.
             </summary>
             <returns>Get access token</returns>
         </member>
-        <member name="M:Licenser.Sdk.Client.Abstractions.ISmsApiAuthClient.RevokeToken(System.String)">
+        <member name="M:Licenser.Sdk.Client.ISmsApiAuthClient.RevokeToken(System.String)">
             <summary>
             Revoke access token.
             </summary>
             <param name="accessToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Licenser.Sdk.Client.Abstractions.ISmsApiClient.CheckLicenseAsync">
+        <member name="M:Licenser.Sdk.Client.ISmsApiClient.CheckLicenseAsync">
             <summary>
             Check client's license status.
             </summary>
             <returns>Invalid if license does not exist for current machine, Expire if license has already expired, Valid if license valid and has not expired.</returns>
         </member>
-        <member name="M:Licenser.Sdk.Client.Abstractions.ISmsApiClient.CreateActivationRequestAsync">
+        <member name="M:Licenser.Sdk.Client.ISmsApiClient.CreateActivationRequestAsync">
             <summary>
             Send activation request.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Licenser.Sdk.Client.Abstractions.ISmsApiClient.GetProductName">
+        <member name="M:Licenser.Sdk.Client.ISmsApiClient.GetProductName">
             <summary>
             Gets client's software product name.
             </summary>
@@ -134,7 +134,7 @@
             Activator exit code means that activator successfully validated license then close itself without terminating client app.
             </summary>
         </member>
-        <member name="M:Licenser.Sdk.Client.ClientIntegration.#ctor(Licenser.Sdk.Client.Abstractions.ISmsApiClient,System.String)">
+        <member name="M:Licenser.Sdk.Client.ClientIntegration.#ctor(Licenser.Sdk.Client.ISmsApiClient,System.String)">
             <summary>
             Constructor of ClientIntegration.
             </summary>
