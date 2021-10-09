@@ -9,7 +9,7 @@
     <Description>SMS API client and integration builtin classes</Description>
     <Version>2.1.1</Version>
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <DocumentationFile>.\Sms.Licensing.Sdk.Client.xml</DocumentationFile>
+    <DocumentationFile>.\Licenser.Sdk.Client.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
