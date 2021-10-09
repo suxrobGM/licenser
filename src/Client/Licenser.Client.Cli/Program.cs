@@ -17,7 +17,7 @@ namespace Licenser.Client.Cli
 
         private static void RunClientMode()
         {
-            Console.WriteLine("SMS Licensing CLI (Client Mode)");
+            Console.WriteLine("Licenser CLI (Client Mode)");
             
             var machineId = KeyGenerator.GetMachineId();
             Console.WriteLine($"\nYour activation ID: {machineId}");

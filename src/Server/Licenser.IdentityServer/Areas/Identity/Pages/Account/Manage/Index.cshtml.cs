@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Licenser.Domain.Entities;
+using Licenser.Server.Domain.Entities;
 
 namespace Licenser.IdentityServer.Areas.Identity.Pages.Account.Manage
 {

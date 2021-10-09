@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Licenser.Domain.Entities;
+using Licenser.Server.Domain.Entities;
 
 namespace Licenser.IdentityServer.Areas.Identity.Pages.Account.Manage
 {
@@ -146,7 +146,7 @@ namespace Licenser.IdentityServer.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("Licenser.Web"),
+                _urlEncoder.Encode("Licenser.Server.Web"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

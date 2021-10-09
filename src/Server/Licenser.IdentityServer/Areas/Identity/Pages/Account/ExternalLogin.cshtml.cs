@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using Licenser.Domain.Entities;
-using Licenser.Domain.Services.Abstractions;
+using Licenser.Server.Domain.Entities;
+using Licenser.Server.Domain.Services.Abstractions;
 
 namespace Licenser.IdentityServer.Areas.Identity.Pages.Account
 {

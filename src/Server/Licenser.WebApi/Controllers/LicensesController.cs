@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Licenser.WebApi.Extensions;
-using Licenser.Domain.Entities;
-using Licenser.Domain.Repositories.Abstractions;
+using Licenser.Server.Domain.Entities;
+using Licenser.Server.Domain.Repositories.Abstractions;
 using Licenser.Shared.Models;
 
 namespace Licenser.WebApi.Controllers

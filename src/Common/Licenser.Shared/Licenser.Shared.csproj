@@ -12,9 +12,4 @@
     <DocumentationFile>.\Licenser.Shared.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>$(NoWarn);1591</NoWarn>
-    <DocumentationFile>.\Sms.Licensing.Shared.xml</DocumentationFile>
-  </PropertyGroup>
-
 </Project>

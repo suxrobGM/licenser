@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Licenser.Domain.Entities;
+using Licenser.Server.Domain.Entities;
 
 namespace Licenser.IdentityServer.Areas.Identity.Pages.Account
 {

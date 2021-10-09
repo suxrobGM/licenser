@@ -14,10 +14,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Licenser.Domain.Entities;
-using Licenser.Domain.Repositories.Abstractions;
-using Licenser.Infrastructure.Data;
-using Licenser.Infrastructure.Repositories;
+using Licenser.Server.Domain.Entities;
+using Licenser.Server.Domain.Repositories.Abstractions;
+using Licenser.Server.Infrastructure.Data;
+using Licenser.Server.Infrastructure.Repositories;
 
 namespace Licenser.WebApi
 {

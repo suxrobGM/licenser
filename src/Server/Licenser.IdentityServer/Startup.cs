@@ -9,11 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Licenser.Domain.Entities;
-using Licenser.Domain.Options;
-using Licenser.Domain.Services.Abstractions;
-using Licenser.Infrastructure.Data;
-using Licenser.Infrastructure.Services;
+using Licenser.Server.Domain.Entities;
+using Licenser.Server.Domain.Options;
+using Licenser.Server.Domain.Services.Abstractions;
+using Licenser.Server.Infrastructure.Data;
+using Licenser.Server.Infrastructure.Services;
 
 namespace Licenser.IdentityServer
 {

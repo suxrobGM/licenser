@@ -1,0 +1,49 @@
+﻿@using Syncfusion.Blazor.Spinner
+@using Licenser.Server.Domain.Services.Abstractions
+@inject IEmailSenderService EmailSender
+
+@{
+    var btnColor = IsSending ? "btn-dark" : "btn-info";
+    var marginSpinner = IsSending ? "mx-1" : "";
+    var marginButtonName = IsSending ? "mx-2" : "";
+}
+
+<button class="btn btn-sm @btnColor" data-toggle="tooltip" data-placement="bottom" title="Send email"
+        @onclick="SendNotificationEmail">
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item border-0 p-0 @marginSpinner">
+            <SfSpinner @bind-Visible="@IsSending" Type="SpinnerType.Bootstrap4" Size="20"></SfSpinner>
+        </li>
+        <li class="list-group-item border-0 p-0 @marginButtonName" style="background-color: inherit">
+            @if (!IsSending)
+            {
+                <span>
+                    <i class="fas fa-envelope"></i>
+                </span>
+            }
+            <span>&nbsp;@ButtonName</span>
+        </li>
+    </ul>
+</button>
+
+@code {
+    [Parameter] public string ButtonName { get; set; }
+    [Parameter] public string EmailAddress { get; set; }
+    [Parameter] public string EmailSubject { get; set; }
+    [Parameter] public string EmailMessage { get; set; }
+    [Parameter] public MessageDialog MessageDialog { get; set; }
+
+    public bool IsSending { get; set; }
+
+    private async Task SendNotificationEmail()
+    {
+        if (IsSending)
+            return;
+
+        IsSending = true;
+        await EmailSender.SendEmailAsync(EmailAddress, EmailSubject, EmailMessage);
+
+        MessageDialog?.Show($"Email successfully sent to {EmailAddress}");
+        IsSending = false;
+    }
+}

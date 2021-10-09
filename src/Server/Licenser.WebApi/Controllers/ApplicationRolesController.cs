@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Licenser.Domain.Entities;
+using Licenser.Server.Domain.Entities;
 using Licenser.Shared.Models;
 
 namespace Licenser.WebApi.Controllers

@@ -4,100 +4,100 @@
         <name>Licenser.Sdk.Server</name>
     </assembly>
     <members>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.GetLicenseAsync(System.String)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.GetLicenseAsync(System.String)">
             <summary>
             Get license by ID from API server
             </summary>
             <param name="id">License ID</param>
             <returns>Licenses</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.GetLicensesAsync">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.GetLicensesAsync">
             <summary>
             Get all licenses from API server
             </summary>
             <returns>Licenses</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.AddLicenseAsync(Licenser.Shared.Models.LicenseDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.AddLicenseAsync(Licenser.Shared.Models.LicenseDto)">
             <summary>
             Add new license item to API server
             </summary>
             <param name="license">License DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.UpdateLicenseAsync(Licenser.Shared.Models.LicenseDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.UpdateLicenseAsync(Licenser.Shared.Models.LicenseDto)">
             <summary>
             Update existing license item to API server
             </summary>
             <param name="license">License DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.DeleteLicenseAsync(Licenser.Shared.Models.LicenseDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.DeleteLicenseAsync(Licenser.Shared.Models.LicenseDto)">
             <summary>
             Delete license item from API server
             </summary>
             <param name="license">License DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.GetActivationRequestsAsync">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.GetActivationRequestsAsync">
             <summary>
             Get list of activation requests.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.DeleteActivationRequestAsync(Licenser.Shared.Models.ActivationRequestDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.DeleteActivationRequestAsync(Licenser.Shared.Models.ActivationRequestDto)">
             <summary>
             Delete activation request.
             </summary>
             <param name="activationRequest"></param>
             <returns></returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.GetUsersAsync">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.GetUsersAsync">
             <summary>
             Get all user from API server
             </summary>
             <returns>Users</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.GetUsersInRoleAsync(System.String)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.GetUsersInRoleAsync(System.String)">
             <summary>
             Get users who have specified role
             </summary>
             <returns>Users</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.AddUserAsync(Licenser.Shared.Models.UserDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.AddUserAsync(Licenser.Shared.Models.UserDto)">
             <summary>
             Add new user to API server
             </summary>
             <param name="user">User DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.UpdateUserAsync(Licenser.Shared.Models.UserDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.UpdateUserAsync(Licenser.Shared.Models.UserDto)">
             <summary>
             Update existing user to API server
             </summary>
             <param name="user">User DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.DeleteUserAsync(Licenser.Shared.Models.UserDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.DeleteUserAsync(Licenser.Shared.Models.UserDto)">
             <summary>
             Delete user from API server
             </summary>
             <param name="user">User DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.GetRolesAsync">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.GetRolesAsync">
             <summary>
             Get all roles from API server
             </summary>
             <returns>Roles</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.UpdateRoleAsync(Licenser.Shared.Models.RoleDto)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.UpdateRoleAsync(Licenser.Shared.Models.RoleDto)">
             <summary>
             Update existing role to API server
             </summary>
             <param name="roleDto">Role DTO type</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.AssignRoleAsync(System.String,System.String)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.AssignRoleAsync(System.String,System.String)">
             <summary>
             Assign specified role to specified user
             </summary>
@@ -105,7 +105,7 @@
             <param name="userId">User ID</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.RemoveRoleFromUserAsync(System.String,System.String)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.RemoveRoleFromUserAsync(System.String,System.String)">
             <summary>
             Remove specified role from specified user
             </summary>
@@ -113,7 +113,7 @@
             <param name="userId">User ID</param>
             <returns>ApiResponse which indicates response status</returns>
         </member>
-        <member name="M:Licenser.Sdk.Server.Abstractions.ISmsApiServer.RemoveAllRolesFromUserAsync(System.String)">
+        <member name="M:Licenser.Sdk.Server.ISmsApiServer.RemoveAllRolesFromUserAsync(System.String)">
             <summary>
             Remove all roles from specified user
             </summary>

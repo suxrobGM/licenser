@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Licenser.Infrastructure\Licenser.Infrastructure.csproj" />
+    <ProjectReference Include="..\Licenser.Server.Infrastructure\Licenser.Server.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

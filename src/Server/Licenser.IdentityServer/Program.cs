@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Licenser.Infrastructure.Data;
+using Licenser.Server.Infrastructure.Data;
 
 namespace Licenser.IdentityServer
 {

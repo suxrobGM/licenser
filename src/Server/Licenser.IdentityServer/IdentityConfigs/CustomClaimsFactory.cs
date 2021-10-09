@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using IdentityModel;
-using Licenser.Domain.Entities;
+using Licenser.Server.Domain.Entities;
 
 namespace Licenser.IdentityServer
 {
